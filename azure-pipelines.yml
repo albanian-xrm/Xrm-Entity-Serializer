@@ -1,0 +1,6 @@
+pool:
+  vmImage: 'vs2017-win2016'
+
+steps:
+- script: echo Setting up azure pipelines!
+  displayName: 'Setting up azure pipelines'
