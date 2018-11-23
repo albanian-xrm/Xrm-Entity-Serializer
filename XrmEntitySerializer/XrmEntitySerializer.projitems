@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>64f38937-039a-4c09-a241-ff07a30aff2a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>XrmEntitySerializer</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AttributeCollectionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FormattedValueCollectionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GuidConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)KeyAttributeCollectionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RelatedEntityCollectionConverter.cs" />
+  </ItemGroup>
+</Project>
