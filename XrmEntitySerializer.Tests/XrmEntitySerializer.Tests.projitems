@@ -9,6 +9,7 @@
     <Import_RootNamespace>XrmEntitySerializer.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)EntityTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GuidConverterTests.cs" />
   </ItemGroup>
 </Project>

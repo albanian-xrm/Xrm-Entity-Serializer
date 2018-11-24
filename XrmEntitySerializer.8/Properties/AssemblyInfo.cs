@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("XrmEntitySerializer.8")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("This library can serialize an Microsoft.Xrm.Sdk.Entity to Json and back using Newtonsoft.Json library.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("XrmEntitySerializer")]

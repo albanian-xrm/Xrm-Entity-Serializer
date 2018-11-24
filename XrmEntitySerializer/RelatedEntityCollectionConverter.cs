@@ -9,21 +9,50 @@ namespace XrmEntitySerializer
 {
     public class RelatedEntityCollectionConverter : JsonConverter<RelatedEntityCollection>
     {
-        public override RelatedEntityCollection ReadJson(JsonReader reader, Type objectType, RelatedEntityCollection existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override RelatedEntityCollection ReadJson(JsonReader reader, Type objectType, RelatedEntityCollection existingRelatedEntities, bool hasExistingValue, JsonSerializer serializer)
         {
-            JArray jArray = JArray.Load(reader);
-            foreach (var item in jArray)
+            for (int i = 0; i < 2; i++)
             {
-                KeyValuePair<Relationship, EntityCollection> pair = item.ToObject<KeyValuePair<Relationship, EntityCollection>>(serializer);
-                existingValue.Add(pair.Key, pair.Value);
+                reader.Read();
+
+                if (reader.TokenType == JsonToken.PropertyName && (string)reader.Value == "$value")
+                {
+                    reader.Read();
+                    JArray jArray = JArray.Load(reader);
+                    foreach (var item in jArray)
+                    {
+                        KeyValuePair<Relationship, EntityCollection> pair = item.ToObject<KeyValuePair<Relationship, EntityCollection>>(serializer);
+                        existingRelatedEntities.Add(pair.Key, pair.Value);
+                    }
+                }
+                else
+                {
+                    reader.Read();
+                }
             }
 
-            return existingValue;
+            reader.Read();
+            return existingRelatedEntities;
         }
 
-        public override void WriteJson(JsonWriter writer, RelatedEntityCollection value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, RelatedEntityCollection relatedEntities, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            writer.WriteStartObject();
+            writer.WritePropertyName("$type");
+            writer.WriteValue(string.Format("{0}, {1}", typeof(FormattedValueCollection).FullName, typeof(FormattedValueCollection).Assembly.GetName().Name));
+            writer.WritePropertyName("$value");
+            writer.WriteStartArray();
+            foreach (KeyValuePair<Relationship, EntityCollection> attribute in relatedEntities)
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("Key");
+                serializer.Serialize(writer, attribute.Key);
+                writer.WritePropertyName("Value");
+                serializer.Serialize(writer, attribute.Value);
+                writer.WriteEndObject();
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
         }
     }
 }

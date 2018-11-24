@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Xunit;
 
 namespace XrmEntitySerializer.Tests
 {
+    [ExcludeFromCodeCoverage]
     public class GuidConverterTests
     {
         [Fact]

@@ -9,20 +9,51 @@ namespace XrmEntitySerializer
 {
     public class AttributeCollectionConverter : JsonConverter<AttributeCollection>
     {
-        public override AttributeCollection ReadJson(JsonReader reader, Type objectType, AttributeCollection existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override AttributeCollection ReadJson(JsonReader reader, Type objectType, AttributeCollection existingAttributes, bool hasExistingValue, JsonSerializer serializer)
         {
-            JArray jArray = JArray.Load(reader);
-            foreach (var item in jArray)
+            for (int i = 0; i < 2; i++)
             {
-                KeyValuePair<string, object> pair = item.ToObject<KeyValuePair<string, object>>(serializer);
-                existingValue.Add(pair.Key, pair.Value);
+                reader.Read();
+
+                if (reader.TokenType == JsonToken.PropertyName && (string)reader.Value == "$value")
+                {
+                    reader.Read(); 
+                    JArray jArray = JArray.Load(reader);
+                    foreach (var item in jArray)
+                    {
+                        KeyValuePair<string, object> pair = item.ToObject<KeyValuePair<string, object>>(serializer);
+                        existingAttributes.Add(pair.Key, pair.Value);
+                    }
+                }
+                else
+                {
+                    reader.Read();          
+                }
             }
-            return existingValue;
+
+            reader.Read();
+           
+            return existingAttributes;
         }
 
-        public override void WriteJson(JsonWriter writer, AttributeCollection value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, AttributeCollection attributes, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            writer.WriteStartObject();
+            writer.WritePropertyName("$type");
+            writer.WriteValue(string.Format("{0}, {1}", typeof(AttributeCollection).FullName, typeof(AttributeCollection).Assembly.GetName().Name));
+            writer.WritePropertyName("$value");
+            writer.WriteStartArray();
+            foreach (KeyValuePair<string, object> attribute in attributes)
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("Key");
+                writer.WriteValue(attribute.Key);
+                writer.WritePropertyName("Value");
+                serializer.Serialize(writer, attribute.Value);
+                writer.WriteEndObject();
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
         }
     }
 }

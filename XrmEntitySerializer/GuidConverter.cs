@@ -10,7 +10,7 @@ namespace XrmEntitySerializer
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(Guid) || objectType == typeof(Guid?);
+            return objectType == typeof(Guid) || objectType == typeof(Nullable<Guid>);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -24,9 +24,9 @@ namespace XrmEntitySerializer
                 return default(Guid?);
             }
 
-            Guid result=default(Guid);
-         
-            for(int i = 0; i < 2; i++)
+            Guid result = default(Guid);
+
+            for (int i = 0; i < 2; i++)
             {
                 reader.Read();
 
@@ -43,9 +43,8 @@ namespace XrmEntitySerializer
                     reader.Read(); //reader.Value == System.Guid, mscorlib             
                 }
             }
-          
-            reader.Read();
 
+            reader.Read();
             return result;
         }
 
@@ -53,7 +52,7 @@ namespace XrmEntitySerializer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("$type");
-            writer.WriteValue("System.Guid, mscorlib");
+            writer.WriteValue(string.Format("{0}, {1}", typeof(System.Guid).FullName, typeof(System.Guid).Assembly.GetName().Name));
             writer.WritePropertyName("$value");
             writer.WriteValue(value);
             writer.WriteEndObject();
