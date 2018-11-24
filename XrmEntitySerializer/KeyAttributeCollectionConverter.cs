@@ -7,6 +7,7 @@ using System.Text;
 
 namespace XrmEntitySerializer
 {
+#if !XRM_7
     public class KeyAttributeCollectionConverter : JsonConverter<KeyAttributeCollection>
     {
         public override KeyAttributeCollection ReadJson(JsonReader reader, Type objectType, KeyAttributeCollection existingKeyAttributes, bool hasExistingValue, JsonSerializer serializer)
@@ -55,4 +56,5 @@ namespace XrmEntitySerializer
             writer.WriteEndObject();
         }
     }
+#endif
 }

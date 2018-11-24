@@ -13,6 +13,31 @@ namespace XrmEntitySerializer.Tests
     public class EntityTests
     {
         [Fact]
+        public void DeserializingAnEntityWithoutConvertersThrows()
+        {
+            Entity entity = new Entity("entity");
+            entity.Id = Guid.NewGuid();
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.TypeNameHandling = TypeNameHandling.Objects;
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                serializer.Serialize(new JsonTextWriter(writer), entity);
+            }
+
+            Assert.Throws<JsonSerializationException>(() =>
+            {
+                object deserializedEntity;
+                memoryStream = new MemoryStream(memoryStream.ToArray());
+                using (StreamReader reader = new StreamReader(memoryStream))
+                {
+                    deserializedEntity = serializer.Deserialize(new JsonTextReader(reader));
+                }
+            });
+        }
+
+        [Fact]
         public void EntityCanBeSerializedAndDeserialized()
         {
             Entity entity = new Entity("entity");
@@ -22,8 +47,10 @@ namespace XrmEntitySerializer.Tests
             serializer.Converters.Add(new GuidConverter());
             serializer.Converters.Add(new AttributeCollectionConverter());
             serializer.Converters.Add(new FormattedValueCollectionConverter());
-            serializer.Converters.Add(new KeyAttributeCollectionConverter());
             serializer.Converters.Add(new RelatedEntityCollectionConverter());
+#if !XRM_7
+            serializer.Converters.Add(new KeyAttributeCollectionConverter());
+#endif
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
 
             using (StreamWriter writer = new StreamWriter(memoryStream))

@@ -17,10 +17,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.8.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.8", "XrmEntitySerializer.8\XrmEntitySerializer.8.csproj", "{E34DB420-0A7A-4168-B607-0B8AB0D65CF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.7", "XrmEntitySerializer.7\XrmEntitySerializer.7.csproj", "{4920AAA1-94D4-4260-B46C-AF9A88D760E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.7.Tests", "XrmEntitySerializer.7.Tests\XrmEntitySerializer.7.Tests.csproj", "{A21B39A5-C139-4AAF-BE6E-697E42635056}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		XrmEntitySerializer\XrmEntitySerializer.projitems*{4920aaa1-94d4-4260-b46c-af9a88d760e5}*SharedItemsImports = 4
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{49dd871d-d743-4600-9537-4f2bbd4747e1}*SharedItemsImports = 4
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{64f38937-039a-4c09-a241-ff07a30aff2a}*SharedItemsImports = 13
+		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{a21b39a5-c139-4aaf-be6e-697e42635056}*SharedItemsImports = 4
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{b60b584c-1536-46b1-94f5-64ddd32861e4}*SharedItemsImports = 4
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{df3dd1a2-5e13-4324-9b17-953ce7a7f5a2}*SharedItemsImports = 13
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{e34db420-0a7a-4168-b607-0b8ab0d65cf8}*SharedItemsImports = 4
@@ -47,6 +53,14 @@ Global
 		{E34DB420-0A7A-4168-B607-0B8AB0D65CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E34DB420-0A7A-4168-B607-0B8AB0D65CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E34DB420-0A7A-4168-B607-0B8AB0D65CF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4920AAA1-94D4-4260-B46C-AF9A88D760E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4920AAA1-94D4-4260-B46C-AF9A88D760E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4920AAA1-94D4-4260-B46C-AF9A88D760E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4920AAA1-94D4-4260-B46C-AF9A88D760E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A21B39A5-C139-4AAF-BE6E-697E42635056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A21B39A5-C139-4AAF-BE6E-697E42635056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A21B39A5-C139-4AAF-BE6E-697E42635056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A21B39A5-C139-4AAF-BE6E-697E42635056}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +69,7 @@ Global
 		{DF3DD1A2-5E13-4324-9B17-953CE7A7F5A2} = {C8631DB1-CBEF-4A31-8AE9-A1D58AF9D3C9}
 		{F99D121A-4408-41C4-9304-661C9C784269} = {C8631DB1-CBEF-4A31-8AE9-A1D58AF9D3C9}
 		{B60B584C-1536-46B1-94F5-64DDD32861E4} = {C8631DB1-CBEF-4A31-8AE9-A1D58AF9D3C9}
+		{A21B39A5-C139-4AAF-BE6E-697E42635056} = {C8631DB1-CBEF-4A31-8AE9-A1D58AF9D3C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC57A865-FF55-4D1C-9C6B-51A2AFEF4404}
