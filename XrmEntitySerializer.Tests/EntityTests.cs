@@ -42,6 +42,12 @@ namespace XrmEntitySerializer.Tests
         {
             Entity entity = new Entity("entity");
             entity.Id = Guid.NewGuid();
+            EntityReference entityReference = new EntityReference("entityReference", Guid.NewGuid());
+            entityReference.Name = "EntityReference";
+            entity.Attributes.Add("entityReference", entityReference);
+            entity.FormattedValues.Add("entityReference", entityReference.Name);
+
+
             JsonSerializer serializer = new JsonSerializer();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
             serializer.Converters.Add(new GuidConverter());

@@ -15,37 +15,23 @@ namespace XrmEntitySerializer
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (reader.TokenType == JsonToken.Null)
+            return ValueType.GetT(reader, objectType, existingValue, serializer, (_reader, _objectType, _existingValue, _serializer) =>
             {
-                if (objectType != typeof(Guid?))
+                Guid result;
+                if (_reader.TokenType == JsonToken.Null)
                 {
-                    throw new JsonSerializationException(String.Format(CultureInfo.InvariantCulture, "Cannot convert null value to {0}.", objectType));
-                }
-                return default(Guid?);
-            }
-
-            Guid result = default(Guid);
-
-            for (int i = 0; i < 2; i++)
-            {
-                reader.Read();
-
-                if (reader.TokenType == JsonToken.PropertyName && (string)reader.Value == "$value")
-                {
-                    reader.Read(); //reader.Value == System.Guid
-                    if (!Guid.TryParse(reader.Value.ToString(), out result))
+                    if (_objectType != typeof(Guid?))
                     {
-                        throw new JsonSerializationException(string.Format(CultureInfo.InvariantCulture, "Unexpected token or value when parsing Guid. Token: {0}, Value: {1}", reader.TokenType, reader.Value));
+                        throw new JsonSerializationException(String.Format(CultureInfo.InvariantCulture, "Cannot convert null value to {0}.", _objectType));
                     }
+                    return default(Guid?);
                 }
-                else
+                else if (!Guid.TryParse(_reader.Value.ToString(), out result))
                 {
-                    reader.Read(); //reader.Value == System.Guid, mscorlib             
+                    throw new JsonSerializationException(string.Format(CultureInfo.InvariantCulture, "Unexpected token or value when parsing Guid. Token: {0}, Value: {1}", _reader.TokenType, _reader.Value));
                 }
-            }
-
-            reader.Read();
-            return result;
+                return result;
+            });
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

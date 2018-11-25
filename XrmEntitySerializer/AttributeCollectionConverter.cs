@@ -19,7 +19,7 @@ namespace XrmEntitySerializer
                 {
                     reader.Read(); 
                     JArray jArray = JArray.Load(reader);
-                    foreach (var item in jArray)
+                    foreach (JToken item in jArray)
                     {
                         KeyValuePair<string, object> pair = item.ToObject<KeyValuePair<string, object>>(serializer);
                         existingAttributes.Add(pair.Key, pair.Value);

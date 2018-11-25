@@ -14,5 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)GuidConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyAttributeCollectionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RelatedEntityCollectionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueType.cs" />
   </ItemGroup>
 </Project>
