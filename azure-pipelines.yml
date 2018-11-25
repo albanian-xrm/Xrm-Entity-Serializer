@@ -33,3 +33,23 @@ steps:
     platform: '$(BuildPlatform)'
 
     configuration: '$(BuildConfiguration)'
+
+- powershell: |
+    Write-Host "CoveragePath: $($Env:CoveragePath)*\*.coverage"
+    $coverageFilePath = (Resolve-Path -path "$($Env:CoveragePath)*\*.coverage").Path
+    Write-Host "Coverage File: $($coverageFilePath)"
+    Write-Host "CodeCoverage: $($Env:CodeCoverage)"
+
+    Invoke-Expression '& $Env:CodeCoverage analyze /output:coverage.coveragexml "$($coverageFilePath)"'
+    Invoke-Expression '& dotnet tool install coveralls.net --version 1.0.0 --tool-path coveralls.net'
+    Invoke-Expression '& coveralls.net\csmacnz.Coveralls --dynamiccodecoverage -i coverage.coveragexml --commitId $Env:REPO_COMMIT --commitBranch $Env:REPO_BRANCH --commitMessage "$Env:REPO_COMMIT_MESSAGE" --useRelativePaths -o cov.json'
+    
+  displayName: 'Publish to Coveralls.io'
+  env: 
+    CoveragePath: 'D:\a\1\s\TestResults\'
+    CodeCoverage: $(CodeCoverage)
+    COVERALLS_REPO_TOKEN: $(COVERALLS_REPO_TOKEN)
+    REPO_COMMIT: $(Build.SourceVersion)
+    REPO_BRANCH: master
+    REPO_COMMIT_MESSAGE: $(Build.SourceVersionMessage)
+  workingDirectory: $(Agent.BuildDirectory)
