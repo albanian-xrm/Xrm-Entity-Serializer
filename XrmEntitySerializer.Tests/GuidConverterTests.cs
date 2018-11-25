@@ -80,8 +80,10 @@ namespace XrmEntitySerializer.Tests
             });
         }
 
-        [Fact]
-        public void DeserializationOfWronglyFormattedGuidThrows()
+        [Theory]
+        [InlineData("{\"$type\": \"System.Guid, mscorlib\", \"$value\": \"Not a Guid\"}")]
+        [InlineData("{\"$type\": \"System.Guid, mscorlib\"}")]
+        public void DeserializationOfWronglyFormattedGuidThrows(string serialized)
         {
             JsonSerializer serializer = new JsonSerializer();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
@@ -90,31 +92,7 @@ namespace XrmEntitySerializer.Tests
 
             using (StreamWriter writer = new StreamWriter(memoryStream))
             {
-                writer.Write("{\"$type\": \"System.Guid, mscorlib\", \"$value\": \"Not a Guid\"}");
-            }
-
-            Assert.Throws<JsonSerializationException>(() =>
-            {
-                object deserializedEntity;
-                memoryStream = new MemoryStream(memoryStream.ToArray());
-                using (StreamReader reader = new StreamReader(memoryStream))
-                {
-                    deserializedEntity = serializer.Deserialize(new JsonTextReader(reader), typeof(Guid));
-                }
-            });
-        }
-
-        [Fact]
-        public void DeserializationOfGuidWithMissingValuePropertyThrows()
-        {
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.TypeNameHandling = TypeNameHandling.Objects;
-            serializer.Converters.Add(new GuidConverter());
-            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
-
-            using (StreamWriter writer = new StreamWriter(memoryStream))
-            {
-                writer.Write("{\"$type\": \"System.Guid, mscorlib\"}");
+                writer.Write(serialized);
             }
 
             Assert.Throws<JsonSerializationException>(() =>

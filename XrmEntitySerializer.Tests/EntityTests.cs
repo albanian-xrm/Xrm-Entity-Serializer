@@ -42,11 +42,16 @@ namespace XrmEntitySerializer.Tests
         {
             Entity entity = new Entity("entity");
             entity.Id = Guid.NewGuid();
+
             EntityReference entityReference = new EntityReference("entityReference", Guid.NewGuid());
             entityReference.Name = "EntityReference";
             entity.Attributes.Add("entityReference", entityReference);
             entity.FormattedValues.Add("entityReference", entityReference.Name);
 
+            Relationship relationship = new Relationship("relationship");
+            Entity relatedEntity = new Entity("entity");
+            relatedEntity.Id = Guid.NewGuid();
+            entity.RelatedEntities.Add(relationship, new EntityCollection(new List<Entity> { relatedEntity }));
 
             JsonSerializer serializer = new JsonSerializer();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
@@ -55,6 +60,7 @@ namespace XrmEntitySerializer.Tests
             serializer.Converters.Add(new FormattedValueCollectionConverter());
             serializer.Converters.Add(new RelatedEntityCollectionConverter());
 #if !XRM_7
+            entity.KeyAttributes.Add("hello", "world");
             serializer.Converters.Add(new KeyAttributeCollectionConverter());
 #endif
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
@@ -64,15 +70,40 @@ namespace XrmEntitySerializer.Tests
                 serializer.Serialize(new JsonTextWriter(writer), entity);
             }
 
-            object deserializedEntity;
+            Entity deserializedEntity;
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedEntity = serializer.Deserialize(new JsonTextReader(reader));
+                deserializedEntity = (Entity)serializer.Deserialize(new JsonTextReader(reader));
             }
 
-            Assert.Equal(entity.LogicalName, (deserializedEntity as Entity).LogicalName);
-            Assert.Equal(entity.Id, (deserializedEntity as Entity).Id);
+            Assert.Equal(entity.LogicalName, deserializedEntity.LogicalName);
+            Assert.Equal(entity.Id, deserializedEntity.Id);
+            Assert.Equal(entity.Attributes.Count, deserializedEntity.Attributes.Count);
+        }
+
+        [Fact]
+        public void DeserializationOfWronglyFormattedAttributeCollectionThrows()
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.TypeNameHandling = TypeNameHandling.Objects;
+            serializer.Converters.Add(new AttributeCollectionConverter());
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                writer.Write("{\"$type\": \"Microsoft.Xrm.Sdk.FormattedValueCollection, Microsoft.Xrm.Sdk\"}");
+            }
+
+            Assert.Throws<JsonSerializationException>(() =>
+            {
+                object deserializedAttributeCollection;
+                memoryStream = new MemoryStream(memoryStream.ToArray());
+                using (StreamReader reader = new StreamReader(memoryStream))
+                {
+                    deserializedAttributeCollection = serializer.Deserialize(new JsonTextReader(reader), typeof(AttributeCollection));
+                }
+            });
         }
     }
 }

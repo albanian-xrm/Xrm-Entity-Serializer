@@ -8,41 +8,20 @@ using System.Text;
 namespace XrmEntitySerializer
 {
 #if !XRM_7
-    public class KeyAttributeCollectionConverter : JsonConverter<KeyAttributeCollection>
+    public class KeyAttributeCollectionConverter : CollectionTypeConverter<KeyAttributeCollection>
     {
-        public override KeyAttributeCollection ReadJson(JsonReader reader, Type objectType, KeyAttributeCollection existingKeyAttributes, bool hasExistingValue, JsonSerializer serializer)
+        protected override KeyAttributeCollection ReadCollection(JsonReader reader, Type objectType, KeyAttributeCollection existingKeyAttributes, JsonSerializer serializer, JArray jArray)
         {
-            for (int i = 0; i < 2; i++)
+            foreach (JToken item in jArray)
             {
-                reader.Read();
-
-                if (reader.TokenType == JsonToken.PropertyName && (string)reader.Value == "$value")
-                {
-                    reader.Read();
-                    JArray jArray = JArray.Load(reader);
-                    foreach (JToken item in jArray)
-                    {
-                        KeyValuePair<string, object> pair = item.ToObject<KeyValuePair<string, object>>(serializer);
-                        existingKeyAttributes.Add(pair.Key, pair.Value);
-                    }
-                }
-                else
-                {
-                    reader.Read();
-                }
+                KeyValuePair<string, object> pair = item.ToObject<KeyValuePair<string, object>>(serializer);
+                existingKeyAttributes.Add(pair.Key, pair.Value);
             }
-
-            reader.Read();
             return existingKeyAttributes;
         }
 
-        public override void WriteJson(JsonWriter writer, KeyAttributeCollection keyAttributes, JsonSerializer serializer)
+        protected override void WriteCollection(JsonWriter writer, KeyAttributeCollection keyAttributes, JsonSerializer serializer)
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("$type");
-            writer.WriteValue(string.Format("{0}, {1}", typeof(FormattedValueCollection).FullName, typeof(FormattedValueCollection).Assembly.GetName().Name));
-            writer.WritePropertyName("$value");
-            writer.WriteStartArray();
             foreach (KeyValuePair<string, object> attribute in keyAttributes)
             {
                 writer.WriteStartObject();
@@ -52,8 +31,6 @@ namespace XrmEntitySerializer
                 serializer.Serialize(writer, attribute.Value);
                 writer.WriteEndObject();
             }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
         }
     }
 #endif

@@ -13,7 +13,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)FormattedValueCollectionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GuidConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyAttributeCollectionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CollectionTypeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RelatedEntityCollectionConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ValueType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueTypeConverter.cs" />
   </ItemGroup>
 </Project>

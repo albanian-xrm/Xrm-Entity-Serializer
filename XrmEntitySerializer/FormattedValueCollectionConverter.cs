@@ -7,41 +7,22 @@ using System.Text;
 
 namespace XrmEntitySerializer
 {
-    public class FormattedValueCollectionConverter : JsonConverter<FormattedValueCollection>
+    public class FormattedValueCollectionConverter : CollectionTypeConverter<FormattedValueCollection>
     {
-        public override FormattedValueCollection ReadJson(JsonReader reader, Type objectType, FormattedValueCollection existingFormattedValues, bool hasExistingValue, JsonSerializer serializer)
+
+
+        protected override FormattedValueCollection ReadCollection(JsonReader reader, Type objectType, FormattedValueCollection existingFormattedValues, JsonSerializer serializer, JArray jArray)
         {
-            for (int i = 0; i < 2; i++)
+            foreach (JToken item in jArray)
             {
-                reader.Read();
-
-                if (reader.TokenType == JsonToken.PropertyName && (string)reader.Value == "$value")
-                {
-                    reader.Read();
-                    JArray jArray = JArray.Load(reader);
-                    foreach (JToken item in jArray)
-                    {
-                        KeyValuePair<string, string> pair = item.ToObject<KeyValuePair<string, string>>(serializer);
-                        existingFormattedValues.Add(pair.Key, pair.Value);
-                    }
-                }
-                else
-                {
-                    reader.Read();
-                }
+                KeyValuePair<string, string> pair = item.ToObject<KeyValuePair<string, string>>(serializer);
+                existingFormattedValues.Add(pair.Key, pair.Value);
             }
-
-            reader.Read();
             return existingFormattedValues;
         }
 
-        public override void WriteJson(JsonWriter writer, FormattedValueCollection formattedValues, JsonSerializer serializer)
+        protected override void WriteCollection(JsonWriter writer, FormattedValueCollection formattedValues, JsonSerializer serializer)
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("$type");
-            writer.WriteValue(string.Format("{0}, {1}", typeof(FormattedValueCollection).FullName, typeof(FormattedValueCollection).Assembly.GetName().Name));
-            writer.WritePropertyName("$value");
-            writer.WriteStartArray();
             foreach (KeyValuePair<string, string> attribute in formattedValues)
             {
                 writer.WriteStartObject();
@@ -51,8 +32,6 @@ namespace XrmEntitySerializer
                 writer.WriteValue(attribute.Value);
                 writer.WriteEndObject();
             }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
         }
     }
 }

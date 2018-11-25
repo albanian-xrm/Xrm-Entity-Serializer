@@ -6,9 +6,9 @@ using System.Text;
 
 namespace XrmEntitySerializer
 {
-    internal class ValueType
+    public abstract class ValueTypeConverter : JsonConverter
     {
-        internal static object GetT(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer, Func<JsonReader, Type, object, JsonSerializer, object> parser)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             object result = null;
             bool parsed = false;
@@ -18,13 +18,13 @@ namespace XrmEntitySerializer
 
                 if (reader.TokenType == JsonToken.PropertyName && (string)reader.Value == "$value")
                 {
-                    reader.Read(); 
-                    result = parser(reader, objectType, existingValue, serializer);
+                    reader.Read();
+                    result = ReadValue(reader, objectType, existingValue, serializer);
                     parsed = true;
                 }
                 else
                 {
-                    reader.Read();           
+                    reader.Read();
                 }
             }
             reader.Read();
@@ -34,5 +34,7 @@ namespace XrmEntitySerializer
             }
             return result;
         }
+
+        protected abstract object ReadValue(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer);
     }
 }
