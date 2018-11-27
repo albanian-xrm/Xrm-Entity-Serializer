@@ -47,22 +47,15 @@ namespace XrmEntitySerializer.Tests
             entityReference.Name = "EntityReference";
             entity.Attributes.Add("entityReference", entityReference);
             entity.FormattedValues.Add("entityReference", entityReference.Name);
-
+#if !XRM_7
+            entity.KeyAttributes.Add("hello", "world");
+#endif
             Relationship relationship = new Relationship("relationship");
             Entity relatedEntity = new Entity("entity");
             relatedEntity.Id = Guid.NewGuid();
             entity.RelatedEntities.Add(relationship, new EntityCollection(new List<Entity> { relatedEntity }));
+            JsonSerializer serializer = new EntitySerializer();
 
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.TypeNameHandling = TypeNameHandling.Objects;
-            serializer.Converters.Add(new GuidConverter());
-            serializer.Converters.Add(new AttributeCollectionConverter());
-            serializer.Converters.Add(new FormattedValueCollectionConverter());
-            serializer.Converters.Add(new RelatedEntityCollectionConverter());
-#if !XRM_7
-            entity.KeyAttributes.Add("hello", "world");
-            serializer.Converters.Add(new KeyAttributeCollectionConverter());
-#endif
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
 
             using (StreamWriter writer = new StreamWriter(memoryStream))
