@@ -38,7 +38,9 @@ steps:
     $coverageFilePath = (Resolve-Path -path "$($Env:CoveragePath)*\*.coverage").Path
     Invoke-Expression '& $Env:CodeCoverage analyze /output:coverage.coveragexml "$($coverageFilePath)"'
     Invoke-Expression '& dotnet tool install coveralls.net --version 1.0.0 --tool-path coveralls.net'
-    Invoke-Expression '& coveralls.net\csmacnz.Coveralls --dynamiccodecoverage -i coverage.coveragexml --commitId $Env:REPO_COMMIT --commitBranch $Env:REPO_BRANCH --commitMessage "$($Env:REPO_COMMIT_MESSAGE)" --jobId $env:JOB_ID --useRelativePaths -o cov.json'
+    $commitAuthor = git log --format=%an HEAD~1..HEAD
+    $commitAuthorEmail = git log --format=%ae HEAD~1..HEAD
+    Invoke-Expression '& coveralls.net\csmacnz.Coveralls --dynamiccodecoverage -i coverage.coveragexml --commitId $Env:REPO_COMMIT --commitBranch $Env:REPO_BRANCH --commitAuthor "$($commitAuthor)" --commitEmail $commitAuthorEmail --commitMessage "$($Env:REPO_COMMIT_MESSAGE)" --jobId $env:JOB_ID --useRelativePaths -o cov.json'
     
   displayName: 'Publish to Coveralls.io'
   env: 
@@ -49,4 +51,4 @@ steps:
     REPO_BRANCH: master
     JOB_ID: $(Build.BuildId)
     REPO_COMMIT_MESSAGE: $(Build.SourceVersionMessage)
-  workingDirectory: $(Agent.BuildDirectory)
+  workingDirectory: $(Build.Repository.LocalPath)
