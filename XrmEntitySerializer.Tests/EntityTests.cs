@@ -47,7 +47,7 @@ namespace XrmEntitySerializer.Tests
             entityReference.Name = "EntityReference";
             entity.Attributes.Add("entityReference", entityReference);
             entity.FormattedValues.Add("entityReference", entityReference.Name);
-#if !XRM_7
+#if !XRM_7 && !XRM_6 && !XRM_5
             entity.KeyAttributes.Add("hello", "world");
 #endif
             Relationship relationship = new Relationship("relationship");
@@ -96,6 +96,67 @@ namespace XrmEntitySerializer.Tests
                 {
                     deserializedAttributeCollection = serializer.Deserialize(new JsonTextReader(reader), typeof(AttributeCollection));
                 }
+            });
+        }
+
+        [Fact]
+        public void EntitySerializerConvertersCanBeOverriden()
+        {
+            Entity entity = new Entity("entity");
+            entity.Id = Guid.NewGuid();
+            List<JsonConverter> converters = new List<JsonConverter>();
+            converters.Add(new GuidConverter());
+            JsonSerializer serializer = new EntitySerializer(converters);
+
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                serializer.Serialize(new JsonTextWriter(writer), entity);
+            }
+
+            Entity deserializedEntity;
+            memoryStream = new MemoryStream(memoryStream.ToArray());
+            using (StreamReader reader = new StreamReader(memoryStream))
+            {
+                deserializedEntity = (Entity)serializer.Deserialize(new JsonTextReader(reader));
+            }
+
+            Assert.Equal(entity.LogicalName, deserializedEntity.LogicalName);
+        }
+
+        [Fact]
+        public void EntitySerializerConvertersCanBeEmpty()
+        {
+            Entity entity = new Entity("entity");
+            entity.Id = Guid.NewGuid();
+            List<JsonConverter> converters = new List<JsonConverter>();
+            JsonSerializer serializer = new EntitySerializer(converters);
+
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                serializer.Serialize(new JsonTextWriter(writer), entity);
+            }
+
+            Entity deserializedEntity;
+            memoryStream = new MemoryStream(memoryStream.ToArray());
+            using (StreamReader reader = new StreamReader(memoryStream))
+            {
+                deserializedEntity = (Entity)serializer.Deserialize(new JsonTextReader(reader));
+            }
+
+            Assert.Equal(entity.LogicalName, deserializedEntity.LogicalName);
+        }
+
+        [Fact]
+        public void CreatingAnEntitySerializerWithNullConvertersThrows()
+        {
+            List<JsonConverter> serializers = null;
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                JsonSerializer serializer = new EntitySerializer(serializers);
             });
         }
     }

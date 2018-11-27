@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace XrmEntitySerializer
 {
-#if !XRM_7
+#if !XRM_7 && !XRM_6 && !XRM_5
     public class KeyAttributeCollectionConverter : CollectionTypeConverter<KeyAttributeCollection>
     {
         protected override KeyAttributeCollection ReadCollection(JsonReader reader, Type objectType, KeyAttributeCollection existingKeyAttributes, JsonSerializer serializer, JArray jArray)
