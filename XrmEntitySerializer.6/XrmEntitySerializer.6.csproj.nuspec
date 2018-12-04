@@ -3,7 +3,7 @@
   <metadata>
     <id>XrmEntitySerializer.6</id>
     <title>XrmEntitySerializer.6</title>
-    <version>1.0.0</version>
+    <version>$version$</version>
     <authors>Betim Beja</authors>
     <owners>Betim Beja</owners>
     <licenseUrl>https://github.com/BetimBeja/Xrm-Entity-Serializer/blob/master/LICENSE</licenseUrl>
@@ -16,7 +16,7 @@
     <tags>Xrm XrmSDK Json EntitySerializer</tags>
     <dependencies>
       <dependency id="Microsoft.CrmSdk.CoreAssemblies" version="6.0.0"/>
-      <dependency id="Newtonsoft.Json" version="11.0.2"  />
+      <dependency id="Newtonsoft.Json" version="6.0.1" />
     </dependencies>
   </metadata>
 </package>

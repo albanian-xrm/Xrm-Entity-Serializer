@@ -72,16 +72,7 @@
     <None Include="packages.config" />
     <None Include="StrongName.snk" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="bin\tools\CrmSvcUtil.exe" />
-    <Content Include="bin\tools\CrmSvcUtil.xml" />
-    <Content Include="bin\tools\Microsoft.Xrm.Sdk.dll" />
-    <Content Include="bin\tools\SolutionPackager.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-    <Folder Include="bin\Release\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="..\XrmEntitySerializer\XrmEntitySerializer.projitems" Label="Shared" />
   <Import Project="..\XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

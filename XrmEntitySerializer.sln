@@ -31,6 +31,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.5", "Xr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.5.Tests", "XrmEntitySerializer.5.Tests\XrmEntitySerializer.5.Tests.csproj", "{67A5259C-AC82-4636-B5B9-C9E6E85FB9B3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{98771E62-D312-4840-833F-DB360F83C258}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{3300d111-4bb0-430a-a061-cfd3ec583fdf}*SharedItemsImports = 4
