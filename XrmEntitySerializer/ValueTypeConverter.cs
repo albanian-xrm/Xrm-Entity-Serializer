@@ -3,6 +3,9 @@ using System;
 
 namespace XrmEntitySerializer
 {
+    /// <summary>
+    /// Base class to convert value types
+    /// </summary>
     public abstract class ValueTypeConverter : JsonConverter
     {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

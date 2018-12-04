@@ -4,9 +4,18 @@ using System;
 
 namespace XrmEntitySerializer
 {
-    public abstract class CollectionTypeConverter<T> : JsonConverter<T>
+    /// <summary>
+    /// Base class to convert collection types
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class CollectionTypeConverter<T> : JsonConverter
     {
-        public override T ReadJson(JsonReader reader, Type objectType, T existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(T);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             T result = default(T);
             bool parsed = false;
@@ -17,7 +26,7 @@ namespace XrmEntitySerializer
                 {
                     reader.Read();
                     JArray jArray = JArray.Load(reader);
-                    result = ReadCollection(reader, objectType, existingValue, serializer, jArray);
+                    result = ReadCollection(reader, objectType, (T)existingValue, serializer, jArray);
                     parsed = true;
                 }
                 else
@@ -36,14 +45,14 @@ namespace XrmEntitySerializer
 
         protected abstract T ReadCollection(JsonReader reader, Type objectType, T existingValue, JsonSerializer serializer, JArray jArray);
 
-        public override void WriteJson(JsonWriter writer, T value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("$type");
             writer.WriteValue(string.Format("{0}, {1}", typeof(T).FullName, typeof(T).Assembly.GetName().Name));
             writer.WritePropertyName("$value");
             writer.WriteStartArray();
-            WriteCollection(writer, value, serializer);
+            WriteCollection(writer, (T)value, serializer);
             writer.WriteEndArray();
             writer.WriteEndObject();
         }

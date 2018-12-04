@@ -6,8 +6,14 @@ using System.Linq;
 
 namespace XrmEntitySerializer
 {
+    /// <summary>
+    /// This class inherits from <see cref="JsonSerializer"/> and provides constructors with the necessary converters to convert an <see cref="Entity"/>
+    /// </summary>
     public class EntitySerializer : JsonSerializer
     {
+        /// <summary>
+        /// <see cref="JsonSerializer"/> is initialized with the necessary converters
+        /// </summary>
         public EntitySerializer() : base()
         {
             TypeNameHandling = TypeNameHandling.Objects;
@@ -20,6 +26,10 @@ namespace XrmEntitySerializer
 #endif
         }
 
+        /// <summary>
+        /// <see cref="JsonSerializer"/> is initialized with the specified converters only adding the default necessary converters if not specified in the list. 
+        /// </summary>
+        /// <param name="converters">List of converters to initialize the JsonSerializer with</param>
         public EntitySerializer(IEnumerable<JsonConverter> converters) : base()
         {
             if (converters == null) throw new ArgumentNullException("converters");
