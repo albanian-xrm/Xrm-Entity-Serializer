@@ -10,6 +10,10 @@ namespace XrmEntitySerializer
     {
         protected override RelatedEntityCollection ReadCollection(JsonReader reader, Type objectType, RelatedEntityCollection existingRelatedEntities, JsonSerializer serializer, JArray jArray)
         {
+            if (existingRelatedEntities == null)
+            {
+                existingRelatedEntities = new RelatedEntityCollection();
+            }
             foreach (JToken item in jArray)
             {
                 KeyValuePair<Relationship, EntityCollection> pair = item.ToObject<KeyValuePair<Relationship, EntityCollection>>(serializer);

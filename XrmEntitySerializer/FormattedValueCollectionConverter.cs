@@ -12,6 +12,10 @@ namespace XrmEntitySerializer
 
         protected override FormattedValueCollection ReadCollection(JsonReader reader, Type objectType, FormattedValueCollection existingFormattedValues, JsonSerializer serializer, JArray jArray)
         {
+            if (existingFormattedValues == null)
+            {
+                existingFormattedValues = new FormattedValueCollection();
+            }
             foreach (JToken item in jArray)
             {
                 KeyValuePair<string, string> pair = item.ToObject<KeyValuePair<string, string>>(serializer);

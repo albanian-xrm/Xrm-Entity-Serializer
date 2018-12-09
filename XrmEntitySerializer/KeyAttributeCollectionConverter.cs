@@ -11,6 +11,10 @@ namespace XrmEntitySerializer
     {
         protected override KeyAttributeCollection ReadCollection(JsonReader reader, Type objectType, KeyAttributeCollection existingKeyAttributes, JsonSerializer serializer, JArray jArray)
         {
+            if (existingKeyAttributes == null)
+            {
+                existingKeyAttributes = new KeyAttributeCollection();
+            }
             foreach (JToken item in jArray)
             {
                 KeyValuePair<string, object> pair = item.ToObject<KeyValuePair<string, object>>(serializer);
