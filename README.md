@@ -13,3 +13,13 @@
 |XrmEntitySerializer.5|[![XrmEntitySerializer.5](https://buildstats.info/nuget/xrmentityserializer.5)](https://www.nuget.org/packages/XrmEntitySerializer.5)|
 
 This library can serialize an Microsoft.Xrm.Sdk.Entity to Json and back using [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) library.
+
+## Usage
+To use the library:
+1. Get the package from NuGet (There are packages for each CRM SDK major version):
+```
+Install-Package XrmEntitySerializer.9
+```
+2. Use XrmSerializer or the JsonConverters to serialize/deserialize your data.
+
+A sample code can be found [here](https://gist.github.com/BetimBeja/832924babb4dc8355b730c43cb9ec61a).
