@@ -20,6 +20,6 @@ To use the library:
 ```
 Install-Package XrmEntitySerializer.9
 ```
-2. Use XrmSerializer or the JsonConverters to serialize/deserialize your data.
+2. Use EntitySerializer or the JsonConverters with your JsonSerializer instance to serialize/deserialize your data.
 
 A sample code can be found [here](https://gist.github.com/BetimBeja/832924babb4dc8355b730c43cb9ec61a).
