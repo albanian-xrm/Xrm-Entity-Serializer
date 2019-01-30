@@ -16,10 +16,11 @@ namespace XrmEntitySerializer.Tests
         [Fact]
         public void AttributeCollectionCanBeSerializedAndDeserialized()
         {
-            AttributeCollectionContainer attributeCollection = new AttributeCollectionContainer();
-            attributeCollection.AttributeCollection = new AttributeCollection();
-            attributeCollection.AttributeCollection.Add("Test", "test");
+            AttributeCollection attributeCollection = new AttributeCollection();
+            attributeCollection.Add("Test", "test");
+
             JsonSerializer serializer = new JsonSerializer();
+            serializer.ContractResolver = new XrmContractResolver();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
             serializer.Converters.Add(new AttributeCollectionConverter());
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
@@ -29,23 +30,58 @@ namespace XrmEntitySerializer.Tests
                 serializer.Serialize(new JsonTextWriter(writer), attributeCollection);
             }
 
-            AttributeCollectionContainer deserializedAttributeCollection;
+            AttributeCollection deserializedAttributeCollection;
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedAttributeCollection = (AttributeCollectionContainer)serializer.Deserialize(new JsonTextReader(reader));
+                deserializedAttributeCollection = (AttributeCollection)serializer.Deserialize(new JsonTextReader(reader));
             }
 
             Assert.Equal(attributeCollection.GetType(), deserializedAttributeCollection.GetType());
-            Assert.Equal(attributeCollection.AttributeCollection.Count, deserializedAttributeCollection.AttributeCollection.Count);
-            Assert.Equal(attributeCollection.AttributeCollection.Keys.First(), deserializedAttributeCollection.AttributeCollection.Keys.First());
-            Assert.Equal(attributeCollection.AttributeCollection.Values.First(), deserializedAttributeCollection.AttributeCollection.Values.First());
+            Assert.Equal(attributeCollection.Count, deserializedAttributeCollection.Count);
+            Assert.Equal(attributeCollection.Keys.First(), deserializedAttributeCollection.Keys.First());
+            Assert.Equal(attributeCollection.Values.First(), deserializedAttributeCollection.Values.First());
+        }
 
+        [Fact]
+        public void AttributeCollectionInObjectCanBeSerializedAndDeserialized()
+        {
+            AttributeCollectionContainer attributeCollectionContainer = new AttributeCollectionContainer();
+            AttributeCollection attributeCollection = new AttributeCollection();
+            attributeCollection.Add("Test", "test");
+            attributeCollectionContainer.AttributeCollection = attributeCollection;
+
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.ContractResolver = new XrmContractResolver();
+            serializer.TypeNameHandling = TypeNameHandling.Objects;
+            serializer.Converters.Add(new AttributeCollectionConverter());
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                serializer.Serialize(new JsonTextWriter(writer), attributeCollectionContainer);
+            }
+
+            AttributeCollectionContainer deserializedAttributeCollectionContainer;
+            memoryStream = new MemoryStream(memoryStream.ToArray());
+            using (StreamReader reader = new StreamReader(memoryStream))
+            {
+                deserializedAttributeCollectionContainer = (AttributeCollectionContainer)serializer.Deserialize(new JsonTextReader(reader));
+            }
+
+            Assert.Equal(attributeCollectionContainer.GetType(), deserializedAttributeCollectionContainer.GetType());
+
+            AttributeCollection deserializedAttributeCollection = (AttributeCollection)deserializedAttributeCollectionContainer.AttributeCollection;
+
+            Assert.Equal(attributeCollectionContainer.AttributeCollection.GetType(), deserializedAttributeCollectionContainer.AttributeCollection.GetType());
+            Assert.Equal(attributeCollection.Count, deserializedAttributeCollection.Count);
+            Assert.Equal(attributeCollection.Keys.First(), deserializedAttributeCollection.Keys.First());
+            Assert.Equal(attributeCollection.Values.First(), deserializedAttributeCollection.Values.First());
         }
 
         class AttributeCollectionContainer
         {
-            public AttributeCollection AttributeCollection { get; set; }
+            public object AttributeCollection { get; set; }
         }
     }
 }

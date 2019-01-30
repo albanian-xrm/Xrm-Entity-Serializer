@@ -9,7 +9,9 @@
     <Import_RootNamespace>XrmEntitySerializer.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DecimalConverterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyAttributeCollectionConverterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSetValueConverterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RelatedEntityCollectionConverterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FormattedValueCollectionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AttributeCollectionConverterTests.cs" />

@@ -1,95 +1,77 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text;
 using Xunit;
 
 namespace XrmEntitySerializer.Tests
 {
     [ExcludeFromCodeCoverage]
-    public class GuidConverterTests
+    public class DecimalConverterTests
     {
         [Fact]
-        public void GuidCanBeSerializedAndDeserialized()
+        public void DecimalCanBeSerializedAndDeserialized()
         {
-            object guid = Guid.NewGuid();
+            object value = 2m;
             JsonSerializer serializer = new JsonSerializer();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
-            serializer.Converters.Add(new GuidConverter());
+            serializer.Converters.Add(new DecimalConverter());
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
 
             using (StreamWriter writer = new StreamWriter(memoryStream))
             {
-                serializer.Serialize(new JsonTextWriter(writer), guid);
+                serializer.Serialize(new JsonTextWriter(writer), value);
             }
 
-            object deserializedGuid;
+            object deserializedValue;
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedGuid = serializer.Deserialize(new JsonTextReader(reader));
+                deserializedValue = serializer.Deserialize(new JsonTextReader(reader), typeof(decimal));
             }
 
-            Assert.Equal(guid, deserializedGuid);
+            Assert.Equal(value, deserializedValue);
+            Assert.Equal(value.GetType(), deserializedValue.GetType());
         }
 
         [Fact]
-        public void DeserializationOfNullableGuid()
+        public void NullDecimalCanBeSerializedAndDeserialized()
         {
+            decimal? value = null;
             JsonSerializer serializer = new JsonSerializer();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
-            serializer.Converters.Add(new GuidConverter());
+            serializer.Converters.Add(new DecimalConverter());
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
-            
+
             using (StreamWriter writer = new StreamWriter(memoryStream))
             {
-                writer.Write("{\"$type\": \"System.Guid, mscorlib\", \"$value\": null}");
+                writer.Write("{\"$type\": \"System.Decimal, mscorlib\", \"$value\": null}");
             }
 
-            object deserializedEntity;
+            decimal? deserializedValue;
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedEntity = serializer.Deserialize(new JsonTextReader(reader), typeof(Guid?));
+                deserializedValue = (decimal?)serializer.Deserialize(new JsonTextReader(reader), typeof(decimal?));
             }
 
-            Assert.Equal(default(Guid?), deserializedEntity);
+            Assert.Null(deserializedValue);
+            Assert.Equal(value, deserializedValue);
         }
 
         [Fact]
-        public void DeserializationOfNullableValueType()
+        public void DeserializationOfNullDecimalThrows()
         {
             JsonSerializer serializer = new JsonSerializer();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
-            serializer.Converters.Add(new GuidConverter());
-            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
-            
-            using (StreamWriter writer = new StreamWriter(memoryStream))
-            {
-                serializer.Serialize(writer, null);
-            }
-
-            object deserializedEntity;
-            memoryStream = new MemoryStream(memoryStream.ToArray());
-            using (StreamReader reader = new StreamReader(memoryStream))
-            {
-                deserializedEntity = serializer.Deserialize(new JsonTextReader(reader), typeof(Guid?));
-            }
-
-            Assert.Equal(default(Guid?), deserializedEntity);
-        }
-
-        [Fact]
-        public void DeserializationOfNullGuidThrows()
-        {
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.TypeNameHandling = TypeNameHandling.Objects;
-            serializer.Converters.Add(new GuidConverter());
+            serializer.Converters.Add(new DecimalConverter());
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
 
             using (StreamWriter writer = new StreamWriter(memoryStream))
             {
-                writer.Write("{\"$type\": \"System.Guid, mscorlib\", \"$value\": null}");
+                writer.Write("{\"$type\": \"System.Decimal, mscorlib\", \"$value\": null}");
             }
 
             Assert.Throws<JsonSerializationException>(() =>
@@ -98,19 +80,19 @@ namespace XrmEntitySerializer.Tests
                 memoryStream = new MemoryStream(memoryStream.ToArray());
                 using (StreamReader reader = new StreamReader(memoryStream))
                 {
-                    deserializedEntity = serializer.Deserialize(new JsonTextReader(reader), typeof(Guid));
+                    deserializedEntity = serializer.Deserialize(new JsonTextReader(reader), typeof(decimal));
                 }
             });
         }
 
         [Theory]
-        [InlineData("{\"$type\": \"System.Guid, mscorlib\", \"$value\": \"Not a Guid\"}")]
-        [InlineData("{\"$type\": \"System.Guid, mscorlib\"}")]
-        public void DeserializationOfWronglyFormattedGuidThrows(string serialized)
+        [InlineData("{\"$type\": \"System.Decimal, mscorlib\", \"$value\": \"Not a Decimal\"}")]
+        [InlineData("{\"$type\": \"System.Decimal, mscorlib\"}")]
+        public void DeserializationOfWronglyFormattedDecimalThrows(string serialized)
         {
             JsonSerializer serializer = new JsonSerializer();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
-            serializer.Converters.Add(new GuidConverter());
+            serializer.Converters.Add(new DecimalConverter());
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
 
             using (StreamWriter writer = new StreamWriter(memoryStream))
@@ -124,7 +106,7 @@ namespace XrmEntitySerializer.Tests
                 memoryStream = new MemoryStream(memoryStream.ToArray());
                 using (StreamReader reader = new StreamReader(memoryStream))
                 {
-                    deserializedEntity = serializer.Deserialize(new JsonTextReader(reader), typeof(Guid));
+                    deserializedEntity = serializer.Deserialize(new JsonTextReader(reader), typeof(decimal));
                 }
             });
         }

@@ -49,6 +49,12 @@ namespace XrmEntitySerializer.Tests
             entity.FormattedValues.Add("entityReference", entityReference.Name);
 #if !XRM_7 && !XRM_6 && !XRM_5
             entity.KeyAttributes.Add("hello", "world");
+#if !XRM_8
+            OptionSetValueCollection optionSetValues = new OptionSetValueCollection();
+            optionSetValues.Add(new OptionSetValue(1));
+            optionSetValues.Add(new OptionSetValue(2));
+            entity.Attributes.Add("optionSetValues", optionSetValues);
+#endif
 #endif
             Relationship relationship = new Relationship("relationship");
             Entity relatedEntity = new Entity("entity");
@@ -73,6 +79,15 @@ namespace XrmEntitySerializer.Tests
             Assert.Equal(entity.LogicalName, deserializedEntity.LogicalName);
             Assert.Equal(entity.Id, deserializedEntity.Id);
             Assert.Equal(entity.Attributes.Count, deserializedEntity.Attributes.Count);
+
+#if !XRM_7 && !XRM_6 && !XRM_5
+            Assert.Equal(entity.KeyAttributes.Count, deserializedEntity.KeyAttributes.Count);
+#if !XRM_8
+            OptionSetValueCollection deserializedOptionSetValues = entity.GetAttributeValue<OptionSetValueCollection>("optionSetValues");
+            Assert.NotNull(deserializedOptionSetValues);
+            Assert.Equal(optionSetValues.Count, deserializedOptionSetValues.Count);
+#endif
+#endif
         }
 
         [Fact]

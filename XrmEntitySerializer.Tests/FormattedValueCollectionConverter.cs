@@ -16,36 +16,37 @@ namespace XrmEntitySerializer.Tests
         [Fact]
         public void FormattedValueCollectionCanBeSerializedAndDeserialized()
         {
-            FormattedValueCollectionContainer formattedValueCollection = new FormattedValueCollectionContainer();
-            formattedValueCollection.FormattedValueCollection = new FormattedValueCollection();
-            formattedValueCollection.FormattedValueCollection.Add("Test", "test");
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.TypeNameHandling = TypeNameHandling.Objects;
-            serializer.Converters.Add(new FormattedValueCollectionConverter());
+            FormattedValueCollectionContainer formattedValueCollectionContainer = new FormattedValueCollectionContainer();
+            FormattedValueCollection formattedValueCollection = new FormattedValueCollection();
+            formattedValueCollectionContainer.FormattedValueCollection = formattedValueCollection;
+            formattedValueCollection.Add("Test", "test");
+            JsonSerializer serializer = new EntitySerializer();
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
 
             using (StreamWriter writer = new StreamWriter(memoryStream))
             {
-                serializer.Serialize(new JsonTextWriter(writer), formattedValueCollection);
+                serializer.Serialize(new JsonTextWriter(writer), formattedValueCollectionContainer);
             }
 
-            FormattedValueCollectionContainer deserializedFormattedValueCollection;
+            FormattedValueCollectionContainer deserializedFormattedValueCollectionContainer;
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedFormattedValueCollection = (FormattedValueCollectionContainer)serializer.Deserialize(new JsonTextReader(reader));
+                deserializedFormattedValueCollectionContainer = (FormattedValueCollectionContainer)serializer.Deserialize(new JsonTextReader(reader));
             }
+            FormattedValueCollection deserializedFormattedValueCollection = (FormattedValueCollection)deserializedFormattedValueCollectionContainer.FormattedValueCollection;
 
-            Assert.Equal(formattedValueCollection.GetType(), deserializedFormattedValueCollection.GetType());
-            Assert.Equal(formattedValueCollection.FormattedValueCollection.Count, deserializedFormattedValueCollection.FormattedValueCollection.Count);
-            Assert.Equal(formattedValueCollection.FormattedValueCollection.Keys.First(), deserializedFormattedValueCollection.FormattedValueCollection.Keys.First());
-            Assert.Equal(formattedValueCollection.FormattedValueCollection.Values.First(), deserializedFormattedValueCollection.FormattedValueCollection.Values.First());
+
+            Assert.Equal(formattedValueCollectionContainer.GetType(), deserializedFormattedValueCollectionContainer.GetType());
+            Assert.Equal(formattedValueCollection.Count, deserializedFormattedValueCollection.Count);
+            Assert.Equal(formattedValueCollection.Keys.First(), deserializedFormattedValueCollection.Keys.First());
+            Assert.Equal(formattedValueCollection.Values.First(), deserializedFormattedValueCollection.Values.First());
 
         }
 
         class FormattedValueCollectionContainer
         {
-            public FormattedValueCollection FormattedValueCollection { get; set; }
+            public object FormattedValueCollection { get; set; }
         }
     }
 }

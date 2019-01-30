@@ -10,12 +10,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AttributeCollectionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSetValueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSetValueCollectionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\OptionSetValueValueProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\RelatedEntityCollectionValueProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\OptionSetValueCollectionValueProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\FormattedValueCollectionValueProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\AttributeCollectionValueProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DecimalConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EntitySerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FormattedValueCollectionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GuidConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyAttributeCollectionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CollectionTypeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\KeyAttributeCollectionValueProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RelatedEntityCollectionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueTypeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XrmContractResolver.cs" />
   </ItemGroup>
 </Project>

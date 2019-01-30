@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace XrmEntitySerializer.Tests
@@ -15,39 +12,64 @@ namespace XrmEntitySerializer.Tests
     public class KeyAttributeCollectionConverterTests
     {
         [Fact]
-        public void KeyAttributeCollectionCanBeSerializedAndDeserialized()
+        public void Test()
         {
-            KeyAttributeCollectionContainer keyAttributeCollection = new KeyAttributeCollectionContainer();
-            keyAttributeCollection.KeyAttributeCollection = new KeyAttributeCollection();
-            keyAttributeCollection.KeyAttributeCollection.Add("Test", "test");
+            KeyAttributeCollection keyAttributeCollection = new KeyAttributeCollection();
+            keyAttributeCollection.Add("Test", "test");
             JsonSerializer serializer = new JsonSerializer();
-            serializer.TypeNameHandling = TypeNameHandling.Objects;
+            serializer.TypeNameHandling = TypeNameHandling.All;
             serializer.Converters.Add(new KeyAttributeCollectionConverter());
+            serializer.ContractResolver = new XrmContractResolver();
+
+
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
 
             using (StreamWriter writer = new StreamWriter(memoryStream))
             {
                 serializer.Serialize(new JsonTextWriter(writer), keyAttributeCollection);
             }
-
-            KeyAttributeCollectionContainer deserializedKeyAttributeCollection;
+            KeyAttributeCollection deserializedKeyAttributeCollection;
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedKeyAttributeCollection = (KeyAttributeCollectionContainer)serializer.Deserialize(new JsonTextReader(reader));
+                deserializedKeyAttributeCollection = (KeyAttributeCollection)serializer.Deserialize(new JsonTextReader(reader), typeof(KeyAttributeCollection));
             }
 
-            Assert.Equal(keyAttributeCollection.GetType(), deserializedKeyAttributeCollection.GetType());
-            Assert.Equal(keyAttributeCollection.KeyAttributeCollection.Count, deserializedKeyAttributeCollection.KeyAttributeCollection.Count);
-            Assert.Equal(keyAttributeCollection.KeyAttributeCollection.Keys.First(), deserializedKeyAttributeCollection.KeyAttributeCollection.Keys.First());
-            Assert.Equal(keyAttributeCollection.KeyAttributeCollection.Values.First(), deserializedKeyAttributeCollection.KeyAttributeCollection.Values.First());
-
+            Assert.Equal(keyAttributeCollection.Count, deserializedKeyAttributeCollection.Count);
+            Assert.Equal(keyAttributeCollection.Keys.First(), deserializedKeyAttributeCollection.Keys.First());
+            Assert.Equal(keyAttributeCollection.Values.First(), deserializedKeyAttributeCollection.Values.First());
         }
 
-        class KeyAttributeCollectionContainer
+        [Fact]
+        public void KeyAttributeCollectionCanBeSerializedAndDeserialized()
         {
-            public KeyAttributeCollection KeyAttributeCollection { get; set; }
+            KeyAttributeCollection keyAttributeCollection = new KeyAttributeCollection();
+            keyAttributeCollection.Add("Test", "test");
+            JsonSerializer serializer = new JsonSerializer();
+         var num =    serializer.Converters.Where(x => x.CanConvert(typeof(object)));
+            serializer.TypeNameHandling = TypeNameHandling.All;
+            serializer.Converters.Add(new KeyAttributeCollectionConverter());
+            serializer.ContractResolver = new XrmContractResolver();
+            
+
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                serializer.Serialize(new JsonTextWriter(writer), keyAttributeCollection);
+            }
+            KeyAttributeCollection deserializedKeyAttributeCollection;
+            memoryStream = new MemoryStream(memoryStream.ToArray());
+            using (StreamReader reader = new StreamReader(memoryStream))
+            {
+                deserializedKeyAttributeCollection = (KeyAttributeCollection)serializer.Deserialize(new JsonTextReader(reader));
+            }
+
+            Assert.Equal(keyAttributeCollection.Count, deserializedKeyAttributeCollection.Count);
+            Assert.Equal(keyAttributeCollection.Keys.First(), deserializedKeyAttributeCollection.Keys.First());
+            Assert.Equal(keyAttributeCollection.Values.First(), deserializedKeyAttributeCollection.Values.First());
         }
+        
     }
 #endif
 }

@@ -8,8 +8,6 @@ namespace XrmEntitySerializer
 {
     public class FormattedValueCollectionConverter : CollectionTypeConverter<FormattedValueCollection>
     {
-
-
         protected override FormattedValueCollection ReadCollection(JsonReader reader, Type objectType, FormattedValueCollection existingFormattedValues, JsonSerializer serializer, JArray jArray)
         {
             if (existingFormattedValues == null)

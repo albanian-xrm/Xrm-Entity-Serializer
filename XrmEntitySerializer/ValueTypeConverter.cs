@@ -10,29 +10,37 @@ namespace XrmEntitySerializer
     {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            object result = null;
-            bool parsed = false;
-            for (int i = 0; i < 2; i++)
+            if (reader.TokenType == JsonToken.Null)
             {
-                reader.Read();
+                return null;
+            }
+            else
+            {
+                object result = null;
+                bool parsed = false;
 
-                if (reader.TokenType == JsonToken.PropertyName && (string)reader.Value == "$value")
+                for (int i = 0; i < 2; i++)
                 {
                     reader.Read();
-                    result = ReadValue(reader, objectType, existingValue, serializer);
-                    parsed = true;
+
+                    if (reader.TokenType == JsonToken.PropertyName && (string)reader.Value == "$value")
+                    {
+                        reader.Read();
+                        result = ReadValue(reader, objectType, existingValue, serializer);
+                        parsed = true;
+                    }
+                    else
+                    {
+                        reader.Read();
+                    }
                 }
-                else
+                reader.Read();
+                if (!parsed)
                 {
-                    reader.Read();
+                    throw new JsonSerializationException("Could not find a property $value");
                 }
+                return result;
             }
-            reader.Read();
-            if (!parsed)
-            {
-                throw new JsonSerializationException("Could not find a property $value");
-            }
-            return result;
         }
 
         protected abstract object ReadValue(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer);
