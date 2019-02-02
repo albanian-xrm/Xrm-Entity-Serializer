@@ -16,7 +16,8 @@ namespace XrmEntitySerializer.Tests
         public void OptionSetValueCanBeSerializedAndDeserialized()
         {
             object optionSetValue = new OptionSetValue(1);
-            JsonSerializer serializer = new EntitySerializer();
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Converters.Add(new OptionSetValueConverter());
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
 
             using (StreamWriter writer = new StreamWriter(memoryStream))
@@ -28,7 +29,7 @@ namespace XrmEntitySerializer.Tests
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedOptionSetValue = serializer.Deserialize(new JsonTextReader(reader));
+                deserializedOptionSetValue = serializer.Deserialize(new JsonTextReader(reader), typeof(OptionSetValue));
             }
 
             Assert.Equal(optionSetValue, deserializedOptionSetValue);
@@ -142,7 +143,10 @@ namespace XrmEntitySerializer.Tests
             OptionSetValueCollection optionSetValue = new OptionSetValueCollection();
             optionSetValue.Add(new OptionSetValue(1));
             optionSetValue.Add(new OptionSetValue(2));
-            JsonSerializer serializer = new EntitySerializer();
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.TypeNameHandling = TypeNameHandling.All;
+            serializer.Converters.Add(new OptionSetValueCollectionConverter());
+            serializer.Converters.Add(new OptionSetValueConverter());
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
 
             using (StreamWriter writer = new StreamWriter(memoryStream))
@@ -154,7 +158,7 @@ namespace XrmEntitySerializer.Tests
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedOptionSetValueCollection = serializer.Deserialize(new JsonTextReader(reader));
+                deserializedOptionSetValueCollection = serializer.Deserialize(new JsonTextReader(reader), typeof(OptionSetValueCollection));
             }
 
             Assert.Equal(optionSetValue.GetType(), deserializedOptionSetValueCollection.GetType());

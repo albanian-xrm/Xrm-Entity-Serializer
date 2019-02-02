@@ -20,7 +20,6 @@ namespace XrmEntitySerializer.Tests
             attributeCollection.Add("Test", "test");
 
             JsonSerializer serializer = new JsonSerializer();
-            serializer.ContractResolver = new XrmContractResolver();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
             serializer.Converters.Add(new AttributeCollectionConverter());
             MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
@@ -34,7 +33,7 @@ namespace XrmEntitySerializer.Tests
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedAttributeCollection = (AttributeCollection)serializer.Deserialize(new JsonTextReader(reader));
+                deserializedAttributeCollection = (AttributeCollection)serializer.Deserialize(new JsonTextReader(reader), typeof(AttributeCollection));
             }
 
             Assert.Equal(attributeCollection.GetType(), deserializedAttributeCollection.GetType());

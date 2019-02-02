@@ -28,7 +28,6 @@ namespace XrmEntitySerializer
         protected override JsonContract CreateContract(Type objectType)
         {
             JsonContract contract = null;
-            base.CreateContract(objectType);
             KeyValuePair<JsonConverter, IValueProvider> converter;
             if (Map.TryGetValue(objectType, out converter))
             {

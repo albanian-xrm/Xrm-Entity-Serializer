@@ -16,6 +16,64 @@ namespace XrmEntitySerializer.Tests
         [Fact]
         public void FormattedValueCollectionCanBeSerializedAndDeserialized()
         {
+            FormattedValueCollection formattedValueCollection = new FormattedValueCollection();
+            formattedValueCollection.Add("Test", "test");
+
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.TypeNameHandling = TypeNameHandling.Objects;
+            serializer.Converters.Add(new FormattedValueCollectionConverter());
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                serializer.Serialize(new JsonTextWriter(writer), formattedValueCollection);
+            }
+
+            FormattedValueCollection deserializedFormattedValueCollection;
+            memoryStream = new MemoryStream(memoryStream.ToArray());
+            using (StreamReader reader = new StreamReader(memoryStream))
+            {
+                deserializedFormattedValueCollection = (FormattedValueCollection)serializer.Deserialize(new JsonTextReader(reader), typeof(FormattedValueCollection));
+            }
+
+            Assert.Equal(formattedValueCollection.GetType(), deserializedFormattedValueCollection.GetType());
+            Assert.Equal(formattedValueCollection.Count, deserializedFormattedValueCollection.Count);
+            Assert.Equal(formattedValueCollection.Keys.First(), deserializedFormattedValueCollection.Keys.First());
+            Assert.Equal(formattedValueCollection.Values.First(), deserializedFormattedValueCollection.Values.First());
+        }
+
+        [Fact]
+        public void FormattedValueCollectionCanBeSerializedAndDeserializedWithoutSpecifyingType()
+        {
+            FormattedValueCollection formattedValueCollection = new FormattedValueCollection();
+            formattedValueCollection.Add("Test", "test");
+
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.TypeNameHandling = TypeNameHandling.Objects;
+            serializer.ContractResolver = new XrmContractResolver();
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                serializer.Serialize(new JsonTextWriter(writer), formattedValueCollection);
+            }
+
+            FormattedValueCollection deserializedFormattedValueCollection;
+            memoryStream = new MemoryStream(memoryStream.ToArray());
+            using (StreamReader reader = new StreamReader(memoryStream))
+            {
+                deserializedFormattedValueCollection = (FormattedValueCollection)serializer.Deserialize(new JsonTextReader(reader));
+            }
+
+            Assert.Equal(formattedValueCollection.GetType(), deserializedFormattedValueCollection.GetType());
+            Assert.Equal(formattedValueCollection.Count, deserializedFormattedValueCollection.Count);
+            Assert.Equal(formattedValueCollection.Keys.First(), deserializedFormattedValueCollection.Keys.First());
+            Assert.Equal(formattedValueCollection.Values.First(), deserializedFormattedValueCollection.Values.First());
+        }
+
+        [Fact]
+        public void FormattedValueCollectionInObjectCanBeSerializedAndDeserialized()
+        {
             FormattedValueCollectionContainer formattedValueCollectionContainer = new FormattedValueCollectionContainer();
             FormattedValueCollection formattedValueCollection = new FormattedValueCollection();
             formattedValueCollectionContainer.FormattedValueCollection = formattedValueCollection;

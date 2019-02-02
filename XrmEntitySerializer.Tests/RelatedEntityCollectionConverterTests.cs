@@ -16,11 +16,10 @@ namespace XrmEntitySerializer.Tests
         [Fact]
         public void RelatedEntityCollectionCanBeSerializedAndDeserialized()
         {
-            RelatedEntityCollectionContainer realtedEntityCollection = new RelatedEntityCollectionContainer();
-            realtedEntityCollection.RelatedEntityCollection = new RelatedEntityCollection();
+            RelatedEntityCollection realtedEntityCollection = new RelatedEntityCollection();
             Relationship relationship = new Relationship("related_entity");
 
-            realtedEntityCollection.RelatedEntityCollection.Add(relationship, new EntityCollection());
+            realtedEntityCollection.Add(relationship, new EntityCollection());
             JsonSerializer serializer = new JsonSerializer();
             serializer.TypeNameHandling = TypeNameHandling.Objects;
             serializer.Converters.Add(new RelatedEntityCollectionConverter());
@@ -31,23 +30,57 @@ namespace XrmEntitySerializer.Tests
                 serializer.Serialize(new JsonTextWriter(writer), realtedEntityCollection);
             }
 
-            RelatedEntityCollectionContainer deserializedRelatedEntityCollection;
+            RelatedEntityCollection deserializedRelatedEntityCollection;
             memoryStream = new MemoryStream(memoryStream.ToArray());
             using (StreamReader reader = new StreamReader(memoryStream))
             {
-                deserializedRelatedEntityCollection = (RelatedEntityCollectionContainer)serializer.Deserialize(new JsonTextReader(reader));
+                deserializedRelatedEntityCollection = (RelatedEntityCollection)serializer.Deserialize(new JsonTextReader(reader), typeof(RelatedEntityCollection));
+            }
+            
+            Assert.Equal(realtedEntityCollection.Count, deserializedRelatedEntityCollection.Count);
+            Assert.Equal(realtedEntityCollection.Keys.First(), deserializedRelatedEntityCollection.Keys.First());
+            Assert.Equal(realtedEntityCollection.Values.First().Entities.Count, deserializedRelatedEntityCollection.Values.First().Entities.Count);
+
+        }
+
+        [Fact]
+        public void RelatedEntityCollectionInObjectCanBeSerializedAndDeserialized()
+        {
+            RelatedEntityCollectionContainer relatedEntityCollectionContainer = new RelatedEntityCollectionContainer();
+            RelatedEntityCollection relatedEntityCollection = new RelatedEntityCollection();
+            relatedEntityCollectionContainer.RelatedEntityCollection = relatedEntityCollection;
+            Relationship relationship = new Relationship("related_entity");
+
+            relatedEntityCollection.Add(relationship, new EntityCollection());
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.TypeNameHandling = TypeNameHandling.All;
+            serializer.ContractResolver = new XrmContractResolver();
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                serializer.Serialize(new JsonTextWriter(writer), relatedEntityCollectionContainer);
             }
 
-            Assert.Equal(realtedEntityCollection.GetType(), deserializedRelatedEntityCollection.GetType());
-            Assert.Equal(realtedEntityCollection.RelatedEntityCollection.Count, deserializedRelatedEntityCollection.RelatedEntityCollection.Count);
-            Assert.Equal(realtedEntityCollection.RelatedEntityCollection.Keys.First(), deserializedRelatedEntityCollection.RelatedEntityCollection.Keys.First());
-            Assert.Equal(realtedEntityCollection.RelatedEntityCollection.Values.First().Entities.Count, deserializedRelatedEntityCollection.RelatedEntityCollection.Values.First().Entities.Count);
+            RelatedEntityCollectionContainer deserializedRelatedEntityCollectionContainer;
+            memoryStream = new MemoryStream(memoryStream.ToArray());
+            using (StreamReader reader = new StreamReader(memoryStream))
+            {
+                deserializedRelatedEntityCollectionContainer = (RelatedEntityCollectionContainer)serializer.Deserialize(new JsonTextReader(reader));
+            }
+
+            Assert.Equal(relatedEntityCollectionContainer.GetType(), deserializedRelatedEntityCollectionContainer.GetType());
+            RelatedEntityCollection deserializedRelatedEntityCollection = (RelatedEntityCollection) deserializedRelatedEntityCollectionContainer.RelatedEntityCollection;
+
+            Assert.Equal(relatedEntityCollection.Count, deserializedRelatedEntityCollection.Count);
+            Assert.Equal(relatedEntityCollection.Keys.First(), deserializedRelatedEntityCollection.Keys.First());
+            Assert.Equal(relatedEntityCollection.Values.First().Entities.Count, deserializedRelatedEntityCollection.Values.First().Entities.Count);
 
         }
 
         class RelatedEntityCollectionContainer
         {
-            public RelatedEntityCollection RelatedEntityCollection { get; set; }
+            public object RelatedEntityCollection { get; set; }
         }
     }
 }
