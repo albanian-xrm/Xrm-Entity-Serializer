@@ -2,13 +2,11 @@
 using Microsoft.Xrm.Sdk;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 
 namespace XrmEntitySerializer
 {
-
     public class KeyAttributeCollectionConverter : CollectionTypeConverter<KeyAttributeCollection>
     {
         protected override KeyAttributeCollection ReadCollection(JsonReader reader, Type objectType, KeyAttributeCollection existingKeyAttributes, JsonSerializer serializer, JArray jArray)
@@ -38,6 +36,5 @@ namespace XrmEntitySerializer
             }
         }      
     }
-
 }
 #endif

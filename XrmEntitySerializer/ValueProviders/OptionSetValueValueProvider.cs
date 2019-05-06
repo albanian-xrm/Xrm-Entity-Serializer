@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Newtonsoft.Json.Serialization;
-using System.Collections.Generic;
 
 namespace XrmEntitySerializer.ValueProviders
 {

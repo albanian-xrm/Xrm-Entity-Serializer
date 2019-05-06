@@ -3,64 +3,53 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.9", "XrmEntitySerializer.9\XrmEntitySerializer.9.csproj", "{49DD871D-D743-4600-9537-4F2BBD4747E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrmEntitySerializer.9", "XrmEntitySerializer.9\XrmEntitySerializer.9.csproj", "{49DD871D-D743-4600-9537-4F2BBD4747E1}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XrmEntitySerializer", "XrmEntitySerializer\XrmEntitySerializer.shproj", "{64F38937-039A-4C09-A241-FF07A30AFF2A}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XrmEntitySerializer.Tests", "XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.shproj", "{DF3DD1A2-5E13-4324-9B17-953CE7A7F5A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.9.Tests", "XrmEntitySerializer.9.Tests\XrmEntitySerializer.9.Tests.csproj", "{F99D121A-4408-41C4-9304-661C9C784269}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrmEntitySerializer.9.Tests", "XrmEntitySerializer.9.Tests\XrmEntitySerializer.9.Tests.csproj", "{F99D121A-4408-41C4-9304-661C9C784269}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49DD871D-D743-4600-9537-4F2BBD4747E1} = {49DD871D-D743-4600-9537-4F2BBD4747E1}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{C8631DB1-CBEF-4A31-8AE9-A1D58AF9D3C9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.8.Tests", "XrmEntitySerializer.8.Tests\XrmEntitySerializer.8.Tests.csproj", "{B60B584C-1536-46B1-94F5-64DDD32861E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.8", "XrmEntitySerializer.8\XrmEntitySerializer.8.csproj", "{E34DB420-0A7A-4168-B607-0B8AB0D65CF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrmEntitySerializer.8", "XrmEntitySerializer.8\XrmEntitySerializer.8.csproj", "{E34DB420-0A7A-4168-B607-0B8AB0D65CF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.7", "XrmEntitySerializer.7\XrmEntitySerializer.7.csproj", "{4920AAA1-94D4-4260-B46C-AF9A88D760E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrmEntitySerializer.7", "XrmEntitySerializer.7\XrmEntitySerializer.7.csproj", "{4920AAA1-94D4-4260-B46C-AF9A88D760E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.7.Tests", "XrmEntitySerializer.7.Tests\XrmEntitySerializer.7.Tests.csproj", "{A21B39A5-C139-4AAF-BE6E-697E42635056}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.6", "XrmEntitySerializer.6\XrmEntitySerializer.6.csproj", "{CB408DF4-DC1C-4F5C-B4F7-89F162E4A12A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrmEntitySerializer.6", "XrmEntitySerializer.6\XrmEntitySerializer.6.csproj", "{CB408DF4-DC1C-4F5C-B4F7-89F162E4A12A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.6.Tests", "XrmEntitySerializer.6.Tests\XrmEntitySerializer.6.Tests.csproj", "{FFDB1157-D6D1-4542-8E4B-AA327D1D6846}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XrmEntitySerializer.Version", "XrmEntitySerializer.Version\XrmEntitySerializer.Version.shproj", "{8104AF26-E1AA-4A77-B1F4-4F1E07700BA8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.5", "XrmEntitySerializer.5\XrmEntitySerializer.5.csproj", "{3300D111-4BB0-430A-A061-CFD3EC583FDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrmEntitySerializer.5", "XrmEntitySerializer.5\XrmEntitySerializer.5.csproj", "{3300D111-4BB0-430A-A061-CFD3EC583FDF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEntitySerializer.5.Tests", "XrmEntitySerializer.5.Tests\XrmEntitySerializer.5.Tests.csproj", "{67A5259C-AC82-4636-B5B9-C9E6E85FB9B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{98771E62-D312-4840-833F-DB360F83C258}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		XrmEntitySerializer.props = XrmEntitySerializer.props
+		XrmEntitySerializer.Version.props = XrmEntitySerializer.Version.props
 	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{3300d111-4bb0-430a-a061-cfd3ec583fdf}*SharedItemsImports = 4
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{3300d111-4bb0-430a-a061-cfd3ec583fdf}*SharedItemsImports = 4
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{4920aaa1-94d4-4260-b46c-af9a88d760e5}*SharedItemsImports = 4
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{4920aaa1-94d4-4260-b46c-af9a88d760e5}*SharedItemsImports = 4
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{49dd871d-d743-4600-9537-4f2bbd4747e1}*SharedItemsImports = 4
-		XrmEntitySerializer\XrmEntitySerializer.projitems*{49dd871d-d743-4600-9537-4f2bbd4747e1}*SharedItemsImports = 4
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{64f38937-039a-4c09-a241-ff07a30aff2a}*SharedItemsImports = 13
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{67a5259c-ac82-4636-b5b9-c9e6e85fb9b3}*SharedItemsImports = 4
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{67a5259c-ac82-4636-b5b9-c9e6e85fb9b3}*SharedItemsImports = 4
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{8104af26-e1aa-4a77-b1f4-4f1e07700ba8}*SharedItemsImports = 13
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{a21b39a5-c139-4aaf-be6e-697e42635056}*SharedItemsImports = 4
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{a21b39a5-c139-4aaf-be6e-697e42635056}*SharedItemsImports = 4
-		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{b60b584c-1536-46b1-94f5-64ddd32861e4}*SharedItemsImports = 4
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{b60b584c-1536-46b1-94f5-64ddd32861e4}*SharedItemsImports = 4
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{cb408df4-dc1c-4f5c-b4f7-89f162e4a12a}*SharedItemsImports = 4
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{cb408df4-dc1c-4f5c-b4f7-89f162e4a12a}*SharedItemsImports = 4
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{df3dd1a2-5e13-4324-9b17-953ce7a7f5a2}*SharedItemsImports = 13
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{e34db420-0a7a-4168-b607-0b8ab0d65cf8}*SharedItemsImports = 4
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{e34db420-0a7a-4168-b607-0b8ab0d65cf8}*SharedItemsImports = 4
-		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{f99d121a-4408-41c4-9304-661c9c784269}*SharedItemsImports = 4
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{f99d121a-4408-41c4-9304-661c9c784269}*SharedItemsImports = 4
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{ffdb1157-d6d1-4542-8e4b-aa327d1d6846}*SharedItemsImports = 4
-		XrmEntitySerializer.Version\XrmEntitySerializer.Version.projitems*{ffdb1157-d6d1-4542-8e4b-aa327d1d6846}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

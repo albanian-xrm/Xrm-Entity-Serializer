@@ -49,9 +49,6 @@ namespace XrmEntitySerializer
                     throw new JsonSerializationException("Could not find a property $value");
                 }
             }
-
-
-
             return result;
         }
 

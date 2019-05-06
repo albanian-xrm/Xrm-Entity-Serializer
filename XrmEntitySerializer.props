@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootNamespace>XrmEntitySerializer</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageProjectUrl>https://github.com/BetimBeja/Xrm-Entity-Serializer</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/BetimBeja/Xrm-Entity-Serializer/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/BetimBeja/Xrm-Entity-Serializer</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>Xrm XrmSDK Json EntitySerializer</PackageTags>
+    <Description>
+      This library can serialize an Microsoft.Xrm.Sdk.Entity to Json and back using Newtonsoft.Json library.
+    </Description>
+    <PackageReleaseNotes>
+	- v1.2.0:
+    a. Improved dependecies
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>StrongName.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+</Project>
