@@ -25,7 +25,7 @@ steps:
   displayName: 'Unit Tests'
   inputs:
     testAssemblyVer2: |
-     **\$(BuildConfiguration)\*Tests.dll
+     **\$(BuildConfiguration)\**\*Tests.dll
      !**\obj\**
 
     codeCoverageEnabled: true
