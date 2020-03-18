@@ -7,21 +7,21 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageProjectUrl>https://github.com/BetimBeja/Xrm-Entity-Serializer</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/BetimBeja/Xrm-Entity-Serializer/blob/master/LICENSE</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/BetimBeja/Xrm-Entity-Serializer</RepositoryUrl>
+    <ProjectUrl>https://github.com/albanian-xrm/Xrm-Entity-Serializer</ProjectUrl>
+    <Repositoryurl>https://github.com/albanian-xrm/Xrm-Entity-Serializer </Repositoryurl>
+    <IconUrl>https://raw.githubusercontent.com/albanian-xrm/Xrm-Entity-Serializer/master/Logo_80x80.png</IconUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>Xrm XrmSDK Json EntitySerializer</PackageTags>
     <Description>
       This library can serialize an Microsoft.Xrm.Sdk.Entity to Json and back using Newtonsoft.Json library.
     </Description>
     <PackageReleaseNotes>
-	- v1.2.0:
-    a. Improved dependecies
+      - v1.2.1:
+      a. Added package icon
     </PackageReleaseNotes>
   </PropertyGroup>
-
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>StrongName.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
 </Project>
