@@ -2,7 +2,7 @@
 
 |Build Status|Coverage Status|
 |------------|------------|
-|[![Build Status](https://dev.azure.com/betimbeja/Xrm-Entity-Serializer/_apis/build/status/BetimBeja.Xrm-Entity-Serializer)](https://dev.azure.com/betimbeja/Xrm-Entity-Serializer/_build/latest?definitionId=1)|[![Coverage Status](https://coveralls.io/repos/github/BetimBeja/Xrm-Entity-Serializer/badge.svg?branch=master)](https://coveralls.io/github/BetimBeja/Xrm-Entity-Serializer?branch=master)|
+|[![Build Status](https://dev.azure.com/Albanian-Xrm/Xrm-Entity-Serializer/_apis/build/status/albanian-xrm.Xrm-Entity-Serializer?branchName=master)](https://dev.azure.com/Albanian-Xrm/Xrm-Entity-Serializer/_build/latest?definitionId=2&branchName=master)|[![Coverage Status](https://coveralls.io/repos/github/albanian-xrm/Xrm-Entity-Serializer/badge.svg?branch=master)](https://coveralls.io/github/albanian-xrm/Xrm-Entity-Serializer?branch=master)|
 
 |Package|NuGet|
 |------------|------------|
