@@ -16,9 +16,7 @@ steps:
   displayName: 'Build Solution'
   inputs:
     solution: '$(Parameters.solution)'
-
     platform: '$(BuildPlatform)'
-
     configuration: '$(BuildConfiguration)'
 
 - task: VSTest@2
@@ -27,28 +25,39 @@ steps:
     testAssemblyVer2: |
      **\$(BuildConfiguration)\**\*Tests.dll
      !**\obj\**
-
     codeCoverageEnabled: true
-
     platform: '$(BuildPlatform)'
-
     configuration: '$(BuildConfiguration)'
 
 - powershell: |
-    $coverageFilePath = (Resolve-Path -path "$($Env:CoveragePath)*\*.coverage").Path
-    Invoke-Expression '& $Env:CodeCoverage analyze /output:coverage.coveragexml "$($coverageFilePath)"'
+    $coverageFilePath = (Resolve-Path -path "$($Env:CoveragePath)\TestResults\*\*.coverage").Path
+    Invoke-Expression '& "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Team Tools\Dynamic Code Coverage Tools\CodeCoverage.exe" analyze /output:coverage.coveragexml "$($coverageFilePath)"'
     Invoke-Expression '& dotnet tool install coveralls.net --version 1.0.0 --tool-path coveralls.net'
     $commitAuthor = git log --format=%an HEAD~1..HEAD
     $commitAuthorEmail = git log --format=%ae HEAD~1..HEAD
-    Invoke-Expression '& coveralls.net\csmacnz.Coveralls --dynamiccodecoverage -i coverage.coveragexml --commitId $Env:REPO_COMMIT --commitBranch $Env:REPO_BRANCH --commitAuthor "$($commitAuthor)" --commitEmail $commitAuthorEmail --commitMessage "$($Env:REPO_COMMIT_MESSAGE)" --jobId $env:JOB_ID --useRelativePaths -o cov.json'
-    
+    Invoke-Expression '& coveralls.net\csmacnz.Coveralls --dynamiccodecoverage -i coverage.coveragexml --commitId $Env:REPO_COMMIT --commitBranch $Env:REPO_BRANCH --commitAuthor "$($commitAuthor)" --commitEmail $commitAuthorEmail --commitMessage "$($Env:REPO_COMMIT_MESSAGE)" --jobId $env:JOB_ID --useRelativePaths -o cov.json' 
   displayName: 'Publish to Coveralls.io'
   env: 
-    CoveragePath: 'D:\a\1\s\TestResults\'
-    CodeCoverage: $(CodeCoverage)
+    CoveragePath: '$(Agent.TempDirectory)'
     COVERALLS_REPO_TOKEN: $(COVERALLS_REPO_TOKEN)
     REPO_COMMIT: $(Build.SourceVersion)
     REPO_BRANCH: master
     JOB_ID: $(Build.BuildId)
     REPO_COMMIT_MESSAGE: $(Build.SourceVersionMessage)
   workingDirectory: $(Build.Repository.LocalPath)
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))  
+
+- task: CopyFiles@2
+  displayName: 'Preparing NuGet packages'
+  inputs:
+    contents: '**\XrmEntitySerializer*.nupkg'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+    flattenFolders: true
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))  
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publishing NuGet packages to pipeline'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'NuGet Package'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))  
