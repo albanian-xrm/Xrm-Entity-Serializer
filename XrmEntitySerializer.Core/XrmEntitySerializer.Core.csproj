@@ -6,10 +6,11 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{49DD871D-D743-4600-9537-4F2BBD4747E1}</ProjectGuid>
-    <AssemblyName>XrmEntitySerializer.9</AssemblyName>
-    <PackageId>XrmEntitySerializer.9</PackageId>
-    <TargetFrameworks>net452;net462;netcoreapp3.0</TargetFrameworks>
+    <ProjectGuid>{49DD871D-D743-4600-9537-4D2BBD4747E1}</ProjectGuid>
+    <AssemblyName>XrmEntitySerializer.Core</AssemblyName>
+    <PackageId>XrmEntitySerializer.Core</PackageId>
+    <PackageVersion>$(PackageVersion)-Alpha</PackageVersion>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -30,22 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
     <DefineConstants>$(DefineConstants);NETCORE;</DefineConstants>
   </PropertyGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.1" />
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
-      <Version>[9.0.0.5,9.0.2.5]</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.1" />
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
-      <Version>[9.0.2.9,10)</Version>
-    </PackageReference>
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Microsoft.PowerPlatform.Cds.Client">

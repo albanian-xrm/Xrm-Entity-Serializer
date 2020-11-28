@@ -41,10 +41,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		XrmEntitySerializer.Version.props = XrmEntitySerializer.Version.props
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrmEntitySerializer.Core", "XrmEntitySerializer.Core\XrmEntitySerializer.Core.csproj", "{49DD871D-D743-4600-9537-4D2BBD4747E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrmEntitySerializer.Core.Tests", "XrmEntitySerializer.Core.Tests\XrmEntitySerializer.Core.Tests.csproj", "{F99D121A-4408-41C4-9304-6D1C9C784269}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{3300d111-4bb0-430a-a061-cfd3ec583fdf}*SharedItemsImports = 5
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{4920aaa1-94d4-4260-b46c-af9a88d760e5}*SharedItemsImports = 5
+		XrmEntitySerializer\XrmEntitySerializer.projitems*{49dd871d-d743-4600-9537-4d2bbd4747e1}*SharedItemsImports = 5
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{49dd871d-d743-4600-9537-4f2bbd4747e1}*SharedItemsImports = 5
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{64f38937-039a-4c09-a241-ff07a30aff2a}*SharedItemsImports = 13
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{67a5259c-ac82-4636-b5b9-c9e6e85fb9b3}*SharedItemsImports = 5
@@ -54,6 +59,7 @@ Global
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{df3dd1a2-5e13-4324-9b17-953ce7a7f5a2}*SharedItemsImports = 13
 		XrmEntitySerializer\XrmEntitySerializer.projitems*{e34db420-0a7a-4168-b607-0b8ab0d65cf8}*SharedItemsImports = 5
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{f99d121a-4408-41c4-9304-661c9c784269}*SharedItemsImports = 5
+		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{f99d121a-4408-41c4-9304-6d1c9c784269}*SharedItemsImports = 5
 		XrmEntitySerializer.Tests\XrmEntitySerializer.Tests.projitems*{ffdb1157-d6d1-4542-8e4b-aa327d1d6846}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +107,14 @@ Global
 		{67A5259C-AC82-4636-B5B9-C9E6E85FB9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67A5259C-AC82-4636-B5B9-C9E6E85FB9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67A5259C-AC82-4636-B5B9-C9E6E85FB9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49DD871D-D743-4600-9537-4D2BBD4747E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49DD871D-D743-4600-9537-4D2BBD4747E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49DD871D-D743-4600-9537-4D2BBD4747E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49DD871D-D743-4600-9537-4D2BBD4747E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99D121A-4408-41C4-9304-6D1C9C784269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99D121A-4408-41C4-9304-6D1C9C784269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99D121A-4408-41C4-9304-6D1C9C784269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99D121A-4408-41C4-9304-6D1C9C784269}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +126,7 @@ Global
 		{A21B39A5-C139-4AAF-BE6E-697E42635056} = {C8631DB1-CBEF-4A31-8AE9-A1D58AF9D3C9}
 		{FFDB1157-D6D1-4542-8E4B-AA327D1D6846} = {C8631DB1-CBEF-4A31-8AE9-A1D58AF9D3C9}
 		{67A5259C-AC82-4636-B5B9-C9E6E85FB9B3} = {C8631DB1-CBEF-4A31-8AE9-A1D58AF9D3C9}
+		{F99D121A-4408-41C4-9304-6D1C9C784269} = {C8631DB1-CBEF-4A31-8AE9-A1D58AF9D3C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC57A865-FF55-4D1C-9C6B-51A2AFEF4404}
