@@ -12,7 +12,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)AttributeCollectionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSetValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSetValueCollectionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParameterCollectionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\OptionSetValueValueProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\ParameterCollectionValueProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\RelatedEntityCollectionValueProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\OptionSetValueCollectionValueProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueProviders\FormattedValueCollectionValueProvider.cs" />

@@ -23,13 +23,14 @@ namespace XrmEntitySerializer
             Converters.Add(new OptionSetValueConverter());
             Converters.Add(new AttributeCollectionConverter());
             Converters.Add(new FormattedValueCollectionConverter());
-            Converters.Add(new RelatedEntityCollectionConverter());
+            Converters.Add(new RelatedEntityCollectionConverter());        
 #if !XRM_7 && !XRM_6 && !XRM_5
             Converters.Add(new KeyAttributeCollectionConverter());
 #if !XRM_8
             Converters.Add(new OptionSetValueCollectionConverter());
 #endif
 #endif
+            Converters.Add(new ParameterCollectionConverter());
         }
 
         /// <summary>
@@ -82,6 +83,10 @@ namespace XrmEntitySerializer
             }
 #endif
 #endif
+            if (!converters.Any(x => x.CanConvert(typeof(ParameterCollection))))
+            {
+                Converters.Add(new ParameterCollectionConverter());
+            }
         }
     }
 }

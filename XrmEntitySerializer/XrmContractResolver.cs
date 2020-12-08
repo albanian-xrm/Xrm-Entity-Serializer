@@ -22,13 +22,14 @@ namespace XrmEntitySerializer
 #endif
             { typeof(FormattedValueCollection), new KeyValuePair<JsonConverter, IValueProvider>(new FormattedValueCollectionConverter(), new FormattedValueCollectionValueProvider())},
             { typeof(RelatedEntityCollection), new KeyValuePair<JsonConverter, IValueProvider>(new RelatedEntityCollectionConverter(), new RelatedEntityCollectionValueProvider())},
-            { typeof(OptionSetValue), new KeyValuePair<JsonConverter, IValueProvider>(new OptionSetValueConverter(), new OptionSetValueValueProvider())}
+            { typeof(OptionSetValue), new KeyValuePair<JsonConverter, IValueProvider>(new OptionSetValueConverter(), new OptionSetValueValueProvider())},
+            { typeof(ParameterCollection), new KeyValuePair<JsonConverter, IValueProvider>(new ParameterCollectionConverter(), new ParameterCollectionValueProvider()) }
         };
 
         protected override JsonContract CreateContract(Type objectType)
         {
-            JsonContract contract = null;
             KeyValuePair<JsonConverter, IValueProvider> converter;
+            JsonContract contract;
             if (Map.TryGetValue(objectType, out converter))
             {
                 JsonObjectContract objectContract = base.CreateObjectContract(objectType);

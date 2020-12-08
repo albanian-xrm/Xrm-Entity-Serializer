@@ -16,8 +16,8 @@
       This library can serialize an Microsoft.Xrm.Sdk.Entity to Json and back using Newtonsoft.Json library.
     </Description>
     <PackageReleaseNotes>
-- v1.2.2:
-  a. Added package icon
+- v1.3.0:
+  a. Added ParameterCollection serialization support
     </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
