@@ -34,7 +34,7 @@ namespace XrmEntitySerializer
             }
             else if (!decimal.TryParse(reader.Value.ToString(), out result))
             {
-                throw new JsonSerializationException(string.Format(CultureInfo.InvariantCulture, "Unexpected token or value when parsing Guid. Token: {0}, Value: {1}", reader.TokenType, reader.Value));
+                throw new JsonSerializationException(string.Format(CultureInfo.InvariantCulture, "Unexpected token or value when parsing Decimal. Token: {0}, Value: {1}", reader.TokenType, reader.Value));
             }
             return result;
         }

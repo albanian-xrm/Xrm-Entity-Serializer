@@ -24,7 +24,6 @@ namespace XrmEntitySerializer
                 JArray jArray = JArray.Load(reader);
                 result = ReadCollection(reader, objectType, (T)existingValue, serializer, jArray);
             }
-
             else
             {
                 for (int i = 0; i < 2; i++)

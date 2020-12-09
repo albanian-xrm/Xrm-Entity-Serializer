@@ -16,7 +16,23 @@ namespace XrmEntitySerializer
             }
             foreach (JToken item in jArray)
             {
-                KeyValuePair<string, object> pair = item.ToObject<KeyValuePair<string, object>>(serializer);
+                var value = item.SelectToken("value");
+                KeyValuePair<string, object> pair;
+                if (value?.SelectToken("__type")?.ToString()?.StartsWith("Entity:") == true)
+                {
+                    var deserialized = item.ToObject<KeyValuePair<string, Entity>>(serializer);
+                    pair = new KeyValuePair<string, object>(deserialized.Key, deserialized.Value);
+                }
+                else if (value?.SelectToken("__type")?.ToString()?.StartsWith("EntityReference:") == true)
+                {
+                    var deserialized = item.ToObject<KeyValuePair<string, EntityReference>>(serializer);
+                    pair = new KeyValuePair<string, object>(deserialized.Key, deserialized.Value);
+                }
+                else
+                {
+                    pair = item.ToObject<KeyValuePair<string, object>>(serializer);
+                }
+
                 existingParameters.Add(pair.Key, pair.Value);
             }
             return existingParameters;
