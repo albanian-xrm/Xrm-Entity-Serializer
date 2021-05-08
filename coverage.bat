@@ -8,6 +8,9 @@ for /F "tokens=*" %%G in ('nuget locals global-packages -List') do (
 	SET NuGets=%NuGets_1:~0,-1%
 )
 
+for /F "tokens=*" %%G in ('where dotnet') do (
+	SET DOT_NET=%%G
+)
 
 SET OPEN_COVER=
 for /D %%D in ("%NuGets%opencover\*") do (
@@ -36,3 +39,8 @@ IF "%XUNIT_RUNNER%"=="" (
 "%OPEN_COVER%" -target:"%XUNIT_RUNNER%" -targetargs:"""XrmEntitySerializer.8.Tests\bin\Debug\net452\XrmEntitySerializer.8.Tests.dll"" -noshadow"  -output:".coverage\XrmEntitySerializer.8.net452.xml" -register:Path64 -filter:"+[XrmEntitySerializer.8]* -[XrmEntitySerializer.8.Tests]*"
 "%OPEN_COVER%" -target:"%XUNIT_RUNNER%" -targetargs:"""XrmEntitySerializer.9.Tests\bin\Debug\net452\XrmEntitySerializer.9.Tests.dll"" -noshadow"  -output:".coverage\XrmEntitySerializer.9.net452.xml" -register:Path64 -filter:"+[XrmEntitySerializer.9]* -[XrmEntitySerializer.9.Tests]*"
 "%OPEN_COVER%" -target:"%XUNIT_RUNNER%" -targetargs:"""XrmEntitySerializer.9.Tests\bin\Debug\net462\XrmEntitySerializer.9.Tests.dll"" -noshadow"  -output:".coverage\XrmEntitySerializer.9.net462.xml" -register:Path64 -filter:"+[XrmEntitySerializer.9]* -[XrmEntitySerializer.9.Tests]*"
+CD XrmEntitySerializer.Core.Tests
+"%OPEN_COVER%" -target:"%DOT_NET%" -targetargs:"test --no-build --framework net5.0" -output:"..\.coverage\XrmEntitySerializer.core.net5.0.xml" -register:user -filter:"+[XrmEntitySerializer.Core]* -[XrmEntitySerializer.Core.Tests]*" -oldstyle
+"%OPEN_COVER%" -target:"%DOT_NET%" -targetargs:"test --no-build --framework netcoreapp3.1" -output:"..\.coverage\XrmEntitySerializer.core.net5.0.xml" -register:user -filter:"+[XrmEntitySerializer.Core]* -[XrmEntitySerializer.Core.Tests]*" -oldstyle
+"%OPEN_COVER%" -target:"%DOT_NET%" -targetargs:"test --no-build --framework netcoreapp3.0" -output:"..\.coverage\XrmEntitySerializer.core.net5.0.xml" -register:user -filter:"+[XrmEntitySerializer.Core]* -[XrmEntitySerializer.Core.Tests]*" -oldstyle
+CD ..
