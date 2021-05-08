@@ -41,6 +41,6 @@ IF "%XUNIT_RUNNER%"=="" (
 "%OPEN_COVER%" -target:"%XUNIT_RUNNER%" -targetargs:"""XrmEntitySerializer.9.Tests\bin\Debug\net462\XrmEntitySerializer.9.Tests.dll"" -noshadow"  -output:".coverage\XrmEntitySerializer.9.net462.xml" -register:Path64 -filter:"+[XrmEntitySerializer.9]* -[XrmEntitySerializer.9.Tests]*"
 CD XrmEntitySerializer.Core.Tests
 "%OPEN_COVER%" -target:"%DOT_NET%" -targetargs:"test --no-build --framework net5.0" -output:"..\.coverage\XrmEntitySerializer.core.net5.0.xml" -register:user -filter:"+[XrmEntitySerializer.Core]* -[XrmEntitySerializer.Core.Tests]*" -oldstyle
-"%OPEN_COVER%" -target:"%DOT_NET%" -targetargs:"test --no-build --framework netcoreapp3.1" -output:"..\.coverage\XrmEntitySerializer.core.net5.0.xml" -register:user -filter:"+[XrmEntitySerializer.Core]* -[XrmEntitySerializer.Core.Tests]*" -oldstyle
-"%OPEN_COVER%" -target:"%DOT_NET%" -targetargs:"test --no-build --framework netcoreapp3.0" -output:"..\.coverage\XrmEntitySerializer.core.net5.0.xml" -register:user -filter:"+[XrmEntitySerializer.Core]* -[XrmEntitySerializer.Core.Tests]*" -oldstyle
+"%OPEN_COVER%" -target:"%DOT_NET%" -targetargs:"test --no-build --framework netcoreapp3.1" -output:"..\.coverage\XrmEntitySerializer.core.netcoreapp3.0.xml" -register:user -filter:"+[XrmEntitySerializer.Core]* -[XrmEntitySerializer.Core.Tests]*" -oldstyle
+"%OPEN_COVER%" -target:"%DOT_NET%" -targetargs:"test --no-build --framework netcoreapp3.0" -output:"..\.coverage\XrmEntitySerializer.core.netcoreapp3.1.xml" -register:user -filter:"+[XrmEntitySerializer.Core]* -[XrmEntitySerializer.Core.Tests]*" -oldstyle
 CD ..
