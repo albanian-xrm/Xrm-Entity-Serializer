@@ -3,12 +3,6 @@ name: Build And Test
 on: [push]
 
 env:
-  # Path to the solution file relative to the root of the project.
-  SOLUTION_FILE_PATH: .
-
-  # Configuration type to build.
-  # You can convert this to a build matrix if you need coverage of multiple configuration types.
-  # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
   BUILD_CONFIGURATION: Debug
 
 jobs:
@@ -40,7 +34,7 @@ jobs:
       
     - name: Test Coverage
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: .\coverage.bat
+      run: .\coverage.ps1
       
     - uses: codecov/codecov-action@v1
       with:
