@@ -4,10 +4,18 @@ If(!(test-path $path -PathType Container ))
 	New-Item -ItemType Directory -Force -Path $path
 }
 
-$NuGets=(nuget locals global-packages -List).Substring(17)
+IF(!(Test-Path .coverage\OpenCover* -PathType Container))
+{
+Install-Package -Name OpenCover -ProviderName NuGet -Scope CurrentUser -Destination $path -SkipDependencies -Force
+}
+IF(!(Test-Path .coverage\xunit.runner.console* -PathType Container))
+{
+Install-Package -Name xunit.runner.console -ProviderName NuGet -Scope CurrentUser -Destination $path -SkipDependencies -Force
+}
+
 $DotNet=(Get-Command dotnet).Source
-$OpenCover=Get-ChildItem -Path $((Get-ChildItem -Path $($NuGets)OpenCover\* | Sort-Object -Descending | Select-Object -First 1).FullName)tools\OpenCover.Console.exe
-$XUnitRunner=Get-ChildItem -Path $((Get-ChildItem -Path $($NuGets)xunit.runner.console\* | Sort-Object -Descending | Select-Object -First 1).FullName)tools\net46\xunit.console.exe
+$OpenCover=Get-ChildItem -Path $((Get-ChildItem -Path .coverage\OpenCover* | Sort-Object -Descending | Select-Object -First 1).FullName)tools\OpenCover.Console.exe
+$XUnitRunner=Get-ChildItem -Path $((Get-ChildItem -Path .coverage\xunit.runner.console* | Sort-Object -Descending | Select-Object -First 1).FullName)tools\net46\xunit.console.exe
 
 
 If($OpenCover -eq ''){

@@ -45,11 +45,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
-      <Version>[7,8)</Version>
-    </PackageReference>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XrmEntitySerializer.7\XrmEntitySerializer.7.csproj" />
   </ItemGroup>
