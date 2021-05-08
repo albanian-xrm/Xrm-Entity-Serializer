@@ -1,4 +1,4 @@
-name: MSBuild
+name: Build And Test
 
 on: [push]
 
@@ -24,7 +24,7 @@ jobs:
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v1.8.0
       with:
-        dotnet-version: 5
+        dotnet-version: 5.0.x
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
