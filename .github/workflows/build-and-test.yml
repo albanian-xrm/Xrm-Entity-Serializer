@@ -40,7 +40,7 @@ jobs:
       
     - name: Test Coverage
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: coverage.bat
+      run: .\coverage.bat
       
     - uses: codecov/codecov-action@v1
       with:
