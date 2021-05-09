@@ -6,6 +6,7 @@
 
 |Package|NuGet|
 |------------|------------|
+|XrmEntitySerializer.Core|[![XrmEntitySerializer.Core](https://buildstats.info/nuget/xrmentityserializer.Core)](https://www.nuget.org/packages/XrmEntitySerializer.Core)|
 |XrmEntitySerializer.9|[![XrmEntitySerializer.9](https://buildstats.info/nuget/xrmentityserializer.9)](https://www.nuget.org/packages/XrmEntitySerializer.9)|
 |XrmEntitySerializer.8|[![XrmEntitySerializer.8](https://buildstats.info/nuget/xrmentityserializer.8)](https://www.nuget.org/packages/XrmEntitySerializer.8)|
 |XrmEntitySerializer.7|[![XrmEntitySerializer.7](https://buildstats.info/nuget/xrmentityserializer.7)](https://www.nuget.org/packages/XrmEntitySerializer.7)|
