@@ -6,11 +6,11 @@ If(!(test-path $path -PathType Container ))
 
 IF(!(Test-Path .coverage\OpenCover* -PathType Container))
 {
-Install-Package -Name OpenCover -ProviderName NuGet -Scope CurrentUser -Destination $path -SkipDependencies -Force
+	& nuget install OpenCover -OutputDirectory $path
 }
 IF(!(Test-Path .coverage\xunit.runner.console* -PathType Container))
 {
-Install-Package -Name xunit.runner.console -ProviderName NuGet -Scope CurrentUser -Destination $path -SkipDependencies -Force
+	& nuget install xunit.runner.console -OutputDirectory $path 
 }
 
 $DotNet=(Get-Command dotnet).Source
