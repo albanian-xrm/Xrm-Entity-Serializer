@@ -1,0 +1,41 @@
+name: Build And Pack
+
+on: 
+  push:
+    branches:
+      - master
+env:
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1.8.0
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Restore NuGet packages
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Restore NuGet packages using dotnet
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: dotnet restore ${{env.SOLUTION_FILE_PATH}}
+      
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+      
+    - name: Publish Packages
+      uses: actions/upload-artifact@v2
+      with:
+        name: NuGets
+        path: '**/XrmEntitySerializer*.nupkg'
