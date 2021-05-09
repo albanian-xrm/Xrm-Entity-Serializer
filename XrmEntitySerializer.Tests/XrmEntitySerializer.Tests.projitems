@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DecimalConverterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParameterCollectionTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RemoteExecutionContextTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyAttributeCollectionConverterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSetValueConverterTests.cs" />
@@ -18,5 +19,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)AttributeCollectionConverterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EntityTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GuidConverterTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)SampleData\RemoteExecutionContext.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
