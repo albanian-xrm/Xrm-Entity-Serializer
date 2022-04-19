@@ -174,5 +174,44 @@ namespace XrmEntitySerializer.Tests
                 JsonSerializer serializer = new EntitySerializer(serializers);
             });
         }
+
+        [Fact]
+        public void EarlyBoundEntityCanBeSerializedAndDeserialized()
+        {
+            AlbanianXrm.EarlyBound.Account entity = new AlbanianXrm.EarlyBound.Account();
+            entity.Id = Guid.NewGuid();
+
+            EntityReference entityReference = new EntityReference("contact", Guid.NewGuid());
+            entityReference.Name = "Primary Contact";
+            entity.PrimaryContactId =  entityReference;
+            entity.FormattedValues.Add("primarycontactid", entityReference.Name);
+#if !XRM_7 && !XRM_6 && !XRM_5
+            entity.KeyAttributes.Add("name", "Unique Account");
+#endif
+
+            JsonSerializer serializer = new EntitySerializer();
+
+            MemoryStream memoryStream = new MemoryStream(new byte[9000], true);
+
+            using (StreamWriter writer = new StreamWriter(memoryStream))
+            {
+                serializer.Serialize(new JsonTextWriter(writer), entity);
+            }
+
+            AlbanianXrm.EarlyBound.Account deserializedEntity;
+            memoryStream = new MemoryStream(memoryStream.ToArray());
+            using (StreamReader reader = new StreamReader(memoryStream))
+            {
+                deserializedEntity = (AlbanianXrm.EarlyBound.Account)serializer.Deserialize(new JsonTextReader(reader));
+            }
+
+            Assert.Equal(entity.LogicalName, deserializedEntity.LogicalName);
+            Assert.Equal(entity.Id, deserializedEntity.Id);
+            Assert.Equal(entity.Attributes.Count, deserializedEntity.Attributes.Count);
+
+#if !XRM_7 && !XRM_6 && !XRM_5
+            Assert.Equal(entity.KeyAttributes.Count, deserializedEntity.KeyAttributes.Count);
+#endif
+        }
     }
 }
