@@ -51,7 +51,7 @@ steps:
     JOB_ID: $(Build.BuildId)
     REPO_COMMIT_MESSAGE: $(Build.SourceVersionMessage)
   workingDirectory: $(Build.Repository.LocalPath)
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))  
+  condition: and(eq('skip','true'), succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))  
 
 - task: CopyFiles@2
   displayName: 'Preparing NuGet packages'
