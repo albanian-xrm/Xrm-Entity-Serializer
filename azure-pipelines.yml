@@ -37,7 +37,7 @@ steps:
 
 - powershell: |
     $coverageFilePath = (Resolve-Path -path "$($Env:CoveragePath)\TestResults\*\*.coverage").Path
-    Invoke-Expression '& "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Team Tools\Dynamic Code Coverage Tools\CodeCoverage.exe" analyze /output:coverage.coveragexml "$($coverageFilePath)"'
+    Invoke-Expression '& "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\Team Tools\Dynamic Code Coverage Tools\CodeCoverage.exe" analyze /output:coverage.coveragexml "$($coverageFilePath)"'
     Invoke-Expression '& dotnet tool install coveralls.net --version 1.0.0 --tool-path coveralls.net'
     $commitAuthor = git log --format=%an HEAD~1..HEAD
     $commitAuthorEmail = git log --format=%ae HEAD~1..HEAD
