@@ -10,14 +10,23 @@ namespace XrmEntitySerializer
     {
         protected override AttributeCollection ReadCollection(JsonReader reader, Type objectType, AttributeCollection existingAttributes, JsonSerializer serializer, JArray jArray)
         {
+            bool checkExisting = true;
             if (existingAttributes == null)
             {
+                checkExisting = false;
                 existingAttributes = new AttributeCollection();
             }
             foreach (JToken item in jArray)
             {
                 KeyValuePair<string, object> pair = item.ToObject<KeyValuePair<string, object>>(serializer);
-                existingAttributes.Add(pair.Key, pair.Value);
+                if (checkExisting && existingAttributes.ContainsKey(pair.Key))
+                {
+                    existingAttributes[pair.Key] = pair.Value;
+                }
+                else
+                {
+                    existingAttributes.Add(pair.Key, pair.Value);
+                }
             }
             return existingAttributes;
         }
