@@ -185,6 +185,8 @@ namespace XrmEntitySerializer.Tests
             entityReference.Name = "Primary Contact";
             entity.PrimaryContactId =  entityReference;
             entity.FormattedValues.Add("primarycontactid", entityReference.Name);
+            entity.NumberOfEmployees = 1;
+
 #if !XRM_7 && !XRM_6 && !XRM_5
             entity.KeyAttributes.Add("name", "Unique Account");
 #endif
@@ -208,7 +210,7 @@ namespace XrmEntitySerializer.Tests
             Assert.Equal(entity.LogicalName, deserializedEntity.LogicalName);
             Assert.Equal(entity.Id, deserializedEntity.Id);
             Assert.Equal(entity.Attributes.Count, deserializedEntity.Attributes.Count);
-
+            Assert.Equal(entity.NumberOfEmployees, deserializedEntity.NumberOfEmployees);
 #if !XRM_7 && !XRM_6 && !XRM_5
             Assert.Equal(entity.KeyAttributes.Count, deserializedEntity.KeyAttributes.Count);
 #endif

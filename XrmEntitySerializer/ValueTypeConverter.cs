@@ -24,6 +24,11 @@ namespace XrmEntitySerializer
                   return ReadValue(reader, objectType, existingValue, serializer);
                 }
 
+                if (reader.TokenType == JsonToken.Integer)
+                {
+                    return ReadValue(reader, objectType, existingValue, serializer);
+                }
+
                 for (int i = 0; i < 2; i++)
                 {
                     reader.Read();

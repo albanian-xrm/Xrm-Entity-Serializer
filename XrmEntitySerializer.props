@@ -16,8 +16,8 @@
       This library can serialize an Microsoft.Xrm.Sdk.Entity to Json and back using Newtonsoft.Json library.
     </Description>
     <PackageReleaseNotes>
-      - v1.3.3:
-      a. Fixed a bug with Early-Bound entities
+      - v1.3.4:
+      a. Added missing IntegerConverter 
     </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

@@ -19,6 +19,7 @@ namespace XrmEntitySerializer
             TypeNameHandling = TypeNameHandling.All;
             ContractResolver = new XrmContractResolver();
             Converters.Add(new GuidConverter());
+            Converters.Add(new IntegerConverter());
             Converters.Add(new DecimalConverter());
             Converters.Add(new OptionSetValueConverter());
             Converters.Add(new AttributeCollectionConverter());
@@ -50,6 +51,10 @@ namespace XrmEntitySerializer
             if (!converters.Any(x => x.CanConvert(typeof(Guid))))
             {
                 Converters.Add(new GuidConverter());
+            }
+            if (!converters.Any(x => x.CanConvert(typeof(int))))
+            {
+                Converters.Add(new IntegerConverter());
             }
             if (!converters.Any(x => x.CanConvert(typeof(decimal))))
             {

@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AttributeCollectionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IntegerConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSetValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSetValueCollectionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParameterCollectionConverter.cs" />
