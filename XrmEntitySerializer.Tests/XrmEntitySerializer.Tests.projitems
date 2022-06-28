@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DecimalConverterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParameterCollectionTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RemoteExecutionContextTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyAttributeCollectionConverterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSetValueConverterTests.cs" />
